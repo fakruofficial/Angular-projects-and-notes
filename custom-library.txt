@@ -1,0 +1,35 @@
+how to create your own npm package.(Angular)
+
+1)create angular application(install angular cli) 
+2)create dedicated workspace for our library(create angular project) - ng new my-workspace
+3)create library - ng g library my-library.
+
+4)my library code will be in lib->my-library.component.ts
+
+5)our library need component - ng g c my-button ---project=my-library
+6) now i am creating button on component
+7) from public-api.ts - i am exporting this created component.
+
+
+How to create angular library and publish on npm.
+
+ 1) create angular project
+ 2) create dedicated workspace for library - ng new my-workspace
+ 3) ng g c my-button and export it from (public-api.ts)
+ 4) ng build my-library --configuration=production
+
+
+now i am going to publish my library
+
+ 5) create npm account and autherize it
+
+6) npm publish --access public
+ now you can see that library in npm 
+
+and how to update the version it 
+
+npm version patch
+
+
+
+

@@ -1,0 +1,84 @@
+Angular 18 new features - 
+
+
+
+before angular had a module system if you wanted to use any component you should be go to that module and access that component.
+# but in angular 17 you can create standalone component
+
+1) zoneless - its a library when change will happen its detects 
+
+now we are detect changes without zoneless.
+
+uses - 
+
+faster initial render and runtime.
+simpler debugging.
+pages fast load honge
+
+
+signals -
+
+export class AppComponent{
+
+title=signal("hello title");
+}
+
+buttonClick(){
+this.title.set('change title');
+}
+
+
+app.component.html
+
+<div class="container">
+
+<h1>{{title()}}</h1>
+<button (click)="buttonClick">Click me<button>
+
+</div>
+
+
+jab me click karunga then title value change hogi ye zoneless se hoga
+
+apako ye use karane ke liye sirf wo zone ki dependencies hatani hai
+
+
+
+2) angular material updated (version 3) (material design supported hai)
+
+3) deferrable view stable (kisi bhi component ko lazy load kar sakate ho)
+in html template
+
+@if(idActive){
+<h1>If test<h1>
+}
+@else{
+<h1>user is not active</h1>
+}
+
+@for(){
+
+}
+
+
+
+3) server side rendering
+
+faster load
+
+
+4) Angular devtools extentation for debugging with hydration process
+
+5) Route Redirects with Functions 
+
+
+
+
+
+
+
+
+
+
+
+

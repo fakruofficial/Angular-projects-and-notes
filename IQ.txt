@@ -1,0 +1,355 @@
+multicasting - 
+
+1) it is like a behavior subject we can set data and used in many times in many components
+2) pure pipes - is a custom pipe ,
+
+in  pure pipes pipe will be evaluated when any change will be happened in input if same change will be happened that time pure pipe will not be reevaluated. either component will be render or not.
+
+if input same out put same as before it will not reevaluated and if input different then 
+out put will be reevaluated 
+
+impure pipes -  every change detection that pipe will be reevaluated - 
+
+input same - out put different every time
+
+If you want behavior where the output can change even with the same input (like generating a random color), that’s where impure pipes come into play.
+
+
+why we use prototype -
+
+to directly added the varabel in function user is not able to get salary value from object2
+
+// in this scenario user is not able to 
+
+function Employee() {
+    this.name = 'Arun';
+    this.role = 'QA';
+}
+
+var empObj1 = new Employee();
+empObj1.salary = 30000;
+console.log(empObj1.salary); // 15
+
+var empObj2 = new Employee();
+console.log(empObj2.salary); // undefined
+
+// syntax
+
+#############################
+
+function details(){
+
+           this.website="Tools QA",
+
+           this.language="Java Script"
+
+         }
+
+         var tutorails = new details();
+
+         document.write(tutorails.website);
+
+         document.write("</br>");
+
+         document.write(tutorails.language);
+
+         details.prototype.Author = "Arunkumar Chandra";
+
+         document.write("</br>");
+
+         document.write(tutorails.Author);
+
+
+ClassName.prototype.variableName = value;
+
+
+
+###### practice Questions ##########
+
+2) Explaining the difference between one way data binding and two way data binding. 
+
+3) create a from to add a new product with validation like required field and , min length , and display validation error.
+
+4) setup routing for multipage routing application create two component home and about and 
+configure navigation between them.
+
+5) Implement parent child component relationship use @input and @output to pass data.
+
+
+6) write a unit test for a component that uses a service MOck the services response and test the components behavior
+
+7) How do you implement lazy loading of modules in Angular?
+
+
+Write test cases for practice :
+
+
+component.ts file
+
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
+})
+export class AppComponent{
+	title = "App";
+	getTitle(){
+		return this.title;
+	}
+}
+
+component.spec.ts file - 
+
+
+// app.component.spec.ts test file
+import { TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AppComponent } from './app.component';
+
+describe('AppComponent', () => {
+  beforeEach(() => TestBed.configureTestingModule({
+    imports: [RouterTestingModule],
+    declarations: [AppComponent]
+  }));
+
+  it(`should return app title`, () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    let result = app.getTitle();
+    expect(result).toEqual('App');
+  });
+
+});
+
+
+## imp -notes - 
+
+* fixture - intract with component and its template
+
+* fixture.componentInstance: To directly test component logic, such as calling methods or setting properties without involving the template.
+
+* import - whichever module , library like (mat module, mat icon) you have imported in component file same you need to import in the import 
+
+* Declaration - whichever component you have Declare in your component.t same you should 
+declare i declaration.
+
+
+
+##########  HOW to mock the service
+
+
+IMP Notes -
+
+providers: [TitleService]: Registers TitleService to be injected as a dependency.
+
+
+##### // app.component.ts
+
+// app.component.ts
+import { Component } from '@angular/core';
+import { TitleService } from './title.service';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
+})
+export class AppComponent {
+  title: string;
+
+  constructor(private titleService: TitleService) {
+    this.title = this.titleService.getAppDescription();
+  }
+}
+
+
+
+###### // app.component.spec.ts
+import { TestBed } from '@angular/core/testing';
+import { AppComponent } from './app.component';
+import { TitleService } from './title.service';
+
+describe('AppComponent', () => {
+  let component: AppComponent;
+  let fixture: any;
+  let titleService: TitleService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [AppComponent],
+      providers: [TitleService]
+    });
+
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+    titleService = TestBed.inject(TitleService);
+  });
+
+
+
+  it('should set the title using the mocked getAppDescription return value', () => {
+
+// A spy allows you to track calls to the method, modify its behavior, and verify how it interacts with other parts of your code.
+// added mock data to service
+    spyOn(titleService, 'getAppDescription').and.returnValue('Mock App Description');
+
+ // Trigger change detection to reinitialize the component with the spy
+
+    fixture.detectChanges();
+
+  // Verify that the title is set to the mocked return value
+    expect(component.title).toBe('Mock App Description');
+  });
+
+
+
+
+  it('should call getAppDescription once', () => {
+
+// callThrough using this you are able to call actual getAppDescription method.
+  const spy = spyOn(titleService, 'getAppDescription').and.callThrough();
+
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+    
+// toHaveBeenCalledTimes(1) -  getAppDescription was called exactly once during the component's initialization.
+
+// getAppDescription call ekadach call hot ahe ki nahi check karayala 
+   expect(spy).toHaveBeenCalledTimes(1);
+
+
+  });
+});
+
+
+// how to use push and include
+
+  if( array[i] != array[j] && !DuplicateEmptyArray.includes(array[i])){
+            
+            DuplicateEmptyArray.push(array[i]);
+
+
+
+
+**microfrountend is like a microservices -   means simply divided monolithic architecture to samller and multiple application that are microfrount end which have different different responsibilities.
+
+they can manage separately and deploy seperately
+
+Independence: Each microfrontend is independently developed, tested, and deployed.
+
+#Module Federation  - Module Federation is the most common way to implement microfrontends in Angular applications.
+
+
+## steps to create microfrountend architecture :
+
+step 1 : Install Angular CLI and Configure Projects
+
+ng new host-app --routing
+ng new remote-app1 --routing
+ng new remote-app2 --routing
+
+step 2 : Enable Module Federation Plugin
+
+ng add @angular-architects/module-federation --project host-app
+ng add @angular-architects/module-federation --project remote-app1
+ng add @angular-architects/module-federation --project remote-app2
+
+step 3 : Configure webpack.config.js  - In main host applicatin (host-app)
+
+const { ModuleFederationPlugin } = require('webpack').container;
+
+module.exports = {
+  plugins: [
+    new ModuleFederationPlugin({
+      name: 'host',
+      remotes: {
+        remoteApp1: 'remoteApp1@http://localhost:4201/remoteEntry.js',
+        remoteApp2: 'remoteApp2@http://localhost:4202/remoteEntry.js',
+      },
+    }),
+  ],
+};
+
+
+step 4 :
+
+ don't understand
+
+
+step 5 :
+
+ng serve host-app --port 4200
+ng serve remote-app1 --port 4201
+ng serve remote-app2 --port 4202
+
+
+advantages - 
+
+1) Autonomy: Different teams can work on separate microfrontends, reducing dependencies and coordination overhead.
+
+2) Parallel Development: Teams can develop, test, and deploy microfrontends independently, speeding up the development cycle.
+
+3) Independent Deployment: You can update or deploy parts of the application without affecting the rest of the system.
+
+4) Ease of Maintenance: Bugs or enhancements in one module don't disrupt other parts of the application.
+
+5) Technology Diversity
+
+Flexibility: Teams can use different frameworks, libraries, or versions for different microfrontends (e.g., Angular for one, React for another).
+
+6) Lazy Loading: Only load the microfrontends that are needed, reducing initial page load time.
+
+7) Optimized Builds: Smaller microfrontends mean faster builds and smaller deployment artifacts.
+
+Real-World Use Cases
+E-commerce: Separate teams manage modules for checkout, product listings, and recommendations.
+
+
+### cookies - 
+
+# What Are Cookies?
+
+Purpose: Store small pieces of information.
+Limitations: Size limit of ~4KB per cookie
+
+
+npm install ngx-cookie-service
+
+
+setCookie() {
+  this.cookieService.set('username', 'JohnDoe', 7); // 7 days expiration
+}
+
+getCookie() {
+  const username = this.cookieService.get('username');
+  console.log(username);
+}
+
+
+
+## what is the difference between http and https :
+
+HTTP: Unsecured, suitable for non-sensitive data.
+
+HTTPS: Secure and essential for modern websites handling sensitive data.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

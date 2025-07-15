@@ -1,0 +1,1401 @@
+javascripts basic concepts
+
+//split('') str into array abc to  ['a','b','c']
+//.join('') -  array into a string ['a','b','c'] to abc
+
+https://ddc4a8fe-30d9-4262-acb8-c68a7d8b3354.mock.pstmn.io
+
+(3)execution context and excution stack   === when we call a fun there is create a execution context .har ek function ka khudaka ek execution context hota hai
+			execution stack// jab bhi hum code ko run karate hai execute karate hai jitane bhi execution context create hote hai usako store karata hai LIFO
+		//when we call a fun there is create a execution context .this execution context  store in execution stack in LIFO manner.
+
+
+	**Arrow functions were introduced in ES6.
+
+		Arrow functions allow us to write shorter function syntax:
+
+		let myFunction = (a, b) => a * b;
+
+			myFunction(1,2);
+
+
+
+(4)hoisting- varable and function declaration are moved on top of the scope
+	 it enables us to call functions before they appear in the code
+console.log(a);
+var a=10;
+
+
+	undefined  //hoisting ke karam undrefined ata hai
+O/P -- 10
+                                                            
+
+	function expression mai hoisting kam karata hai
+	**pahile call then define  means hoisting
+
+	sum(5,10);
+	function sum(a,b){
+	add=a+b;
+	console.log(add);
+}
+//  o/p  15
+
+//pahile call then define
+
+
+
+(5)scope chain & lexicle scope =resolve the evalue of varable names and lexicle scope(parent child like closure) scope chain in javascripts is lexically defined.
+
+	(parent child like closure)
+
+	<scripts>
+	
+	var a="hello guys";    //its a global scope
+	
+	function first(){
+		var b=how are you;
+		second();
+	function second(){
+		var c="my self vinod thapa";
+	//inner can access the the varable of parent class and global var
+	console.log(a+b+c);
+			
+	}
+			
+}first();
+
+	<scripts/>
+
+
+
+
+(6)strict mode      to catch the small problem
+--chote chote problems ko pakadane ke liye hum strict mode use karate hai 
+	"use Strict"
+	function sum(a,b);{
+	add=a+b    // here need var
+	console.log(add);
+	}
+	sum(10,10);
+in console me error exact  dikhayega
+// Uncaught ReferenceError: (add) is not defined
+    at exampleFunction (<filename>:<line>:<column>)
+    at <filename>:<line>:<column>
+
+
+
+(7)this keyword =( The this keyword refers to the current object in a method) or constructor. 
+const person = {
+  firstName: "John",
+  lastName : "Doe",
+  id       : 5566,
+  fullName : function() {
+    return this.firstName + " " + this.lastName;
+  }
+};
+
+
+
+
+The most common use of the this keyword is to eliminate.
+ the confusion between class attributes and parameters with the same name
+
+
+(9)functional programming      This means that we can work with functions in JavaScript the same way as variables. like  const a=function()=>{    }
+											const myname=(a,b)=>{    }
+
+											const mysirname=(a,b)=>{
+											return a+b; }
+
+		
+
+(11)itersators  (items of mydata) console.log(items)  (to traverse each and every element in the collection)
+(12)exponetation  math.pow(3,7) old way  3**7 new es7 way
+(13) context api  -- we pass data from a to c insted of props
+
+
+
+
+JSX stands for JavaScript XML. JSX allows us to write HTML in React.
+ JSX makes it easier to write and add HTML in React.
+splice() method is mostly used when you need to delete or add new elements to an array.
+
+props-to pass data from one component to another 
+
+********************************************************************
+
+
+*redux basis: def- Redux is a pattern and library for managing and updating application state,
+		Redux is a state management library that helps you better manage state in your applications
+	**if you want to pass data one component to another i mean a to c you have to pass data to all component so its very lengthy process that why we use redux**
+	**in redux we create redux store the if youu want to get any data we use redux store to get data.there is lots of component,lots of changes in state,your app is modertely complex**
+
+ *when it is needed 		(1)your app is moderately complex
+			(2)lots of component levels
+			(3)lots of changes in state
+
+**why redux :  its totally depend on you ki app react hooks use karate ho ya redux
+	
+		 @  to manage the state
+	      @ data flow is parent to child unidirectional --this is problem because child se data parent mai pass nahi kar sakate
+	       @but PROPS ki help se hum data pass kar sakate hai lekin
+	        lekin hame child ke upper jitane bhi component hai usame data 
+	        pass karana padega ye bhaut lenthy process hai  
+	        @ye problem hai esako bolate hum (props drilling) 
+	        @ye problem solve hua apake react hook mai with help of provider and consumer 
+	        
+ 	Redux Store*****but In redux (jo data hai usako hum seperate store mai add karenge)
+	jis component ko data chahiye udhar se wo utha lega hamare application ke sare store esimai honage
+
+	****redux main topic ***
+	(1) Action--what to do  like increment or decrement 2 hi action hai   
+	(2)Reducer-- jab mai increment kar raha hu usaki sari functionality    // const changeTheNumber=(state=initialState,action)=>{  again takes two parameter initial state and action.
+	(3)store--we store state ,object here
+
+	(frouit machine) example 
+
+	Note  :  for practically refer to see redux with thapa code code;
+
+
+********************************************************************************						 						
+	
+
+
+
+Routing types:
+	why we use switch in react route -- jo hame pahile url dali hai wo render karane ke liye  exact / vahi dikhega
+
+		Memory Router-- url cannot change when i click in home or about 
+		Browser Router--  we add all component in browser router
+		Hash Router  --we use hash in url because url doesnt make a server request
+		
+						
+		When we have small client side applications which doesn't need backend we can use HashRouter because when we use hashes in the URL/location
+		 bar browser doesn't make a server request. 
+		BrowserRouter: When we have big production-ready applications which serve backend, it is recommended to use <BrowserRouter> 
+
+
+
+
+*************************************************************************
+css basic: css3  -media queries-New Web browsers support CSS3.
+
+		box-model- margins, borders, padding, and the actual content.
+
+advantage of css----CSS saves time − You can write CSS once and then reuse the same sheet in multiple HTML pages
+
+css selector--.myclass{
+}
+and
+#myId{
+}
+
+@media only screen and (max-width: 600px) {
+  body {
+    background-color: lightblue;
+  }
+}
+
+
+*************************************************************************
+javascripts array function:
+	pop,push ,tostring,splice,slice,shift,unsghift like a pop and push
+ref the code file
+
+//shift() and unshift()
+
+var myArray = [1, 2, 3];
+var shiftedElement = myArray.shift(); // Removes 1
+//console.log(myArray);
+myArray.unshift(6); // Adds 0 to the beginning
+console.log(myArray);
+
+let messages = ['msg2', 'msg3'];
+messages.unshift('msg1'); // Adds 'msg1' to the beginning
+console.log(messages); // ['msg1', 'msg2', 'msg3']
+
+*************************************************************************
+
+node Api and basic which version  node 18 current
+react version    -React 17 current
+
+
+it bind with each element = map
+if you wat to get unfullfilled data you use = filter 
+callback ===we create a function in another functionn as an argument
+
+
+	*exact://exact:the current URL is an exact match.
+
+	 *you can ensure that the route will match only if the current URL is an exact match
+
+
+	*switch :because we have multiple routes and multiple plate pages in our app 
+	*//but we only want to show one page at a time
+
+
+
+**react life cycle**
+
+class based and functional based
+
+class based -
+		
+	(componentdidMount)****	 react code is already placed in a dom   after load it call  
+	(compoonentWillunmount)****	 allows us to execute the React code when the component gets destroyed .
+	(componentdid update)****	allows us to execute the React code when the component is updated. component update zalyanantar 
+	
+	(componentdidcatch)*****             to handle error
+	
+	in functional based afterf 16.5 version hook come
+	
+**********************
+
+	difference is class based and functional based is==
+	
+	*(1)
+	**in class based their is error boundry to handle errror
+
+	<errorBoundry>
+	your eroor code here
+
+	</errorBoundry>
+	
+	**but in functional based component we handle error using try catch
+
+			functional component                                                                               class component
+	*(2)There is no render method used in functional components.	 It must have the render() method returning JSX (which is syntactically similar to HTML)
+	*(3)React lifecycle methods (for example, componentDidMount) cannot be used in functional components.	React lifecycle methods can be used inside class components (for example, componentDidMount).
+
+*****************
+
+
+	remove duplicate array we use set
+
+	let chars = ['A', 'B', 'A', 'C', 'B'];
+	let uniqueChars = [...new Set(chars)];
+
+	console.log(uniqueChars);
+ 		
+	o/p==== A,B,C
+	
+
+**********************************************************************************
+	
+
+project explain: ** 
+		**I have worked on one of our project named texture healthcare where the backend apis are written in java spring mvc and the front end is in react
+
+		**My responsibility was to work on front-end with other team member for designing components and integrating backend apis
+		
+		**For integrating backend apis I have used axios library(npm install axios)
+		**this api related code i write in UseEffect hook 
+
+
+**********************************************************************************
+
+
+
+
+texture -- java 8 spring boot , react 16.5 with hooks, mysql api
+	
+	**this is a java part**
+
+	*add dependency
+	*create employeeentity-- id,name,city     employee
+	*create reposatory- extend jpa reposatory  
+	*create employee controller   add url  /employee    autoweired with  Employee reposatory
+	*then we run main class (spring boot application class) here we decale value of emplyee like  1,gajendra,london and test rest api
+	
+	**this is react part**
+	
+	*create react app
+	*index.js ===import app.js	ReactDOM.render(
+ 			 <React.StrictMode>
+    			<App />
+  			</React.StrictMode>,
+
+	*app.js=then npm add axios
+	* employee.services  we get the java url ussing axios
+	
+	(EMPLOYEE_API_BASE_URL)='http://localhost:8080/api/employees'    //this is java url 	
+
+		getEmployees(){
+
+        		return axios.get(EMPLOYEE_API_BASE_URL);	
+	
+	
+	*employee component== autoweired with employye service and call get emplyy method
+	
+		useeffecf{
+			getEmployee();
+				}
+	and add with the help of (usestate)
+
+
+
+
+******in app.js employee component call******
+	function App() {
+  return (
+    <EmployeeComponent />
+  );
+}
+
+
+
+
+useState ek function hai
+//hum useState ki help se kisi ka bhi state change kar sakate hai
+//yaha click me par click karane par jo maine console pe print hua hai wahi front page pe dikhega
+//hum yaha class cokmpnet main kam nahi karenge functional component me kam karenage
+
+
+
+splice - removing or replacing existing elements with new ones.
+
+
+
+
+
+
+
+
+
+
+*****mostely api related code written in useEffect hook.
+
+http get data and add data
+get data from url
+
+
+***********
+const fetchMoviesHandler = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await fetch('https://react-http-9c64b-default-rtdb.firebaseio.com/movies.json');
+      if (!response.ok) {
+        throw new Error('Something went wrong!');
+      }
+
+      const data = await response.json();
+  
+*********
+    add data in url 
+
+async function addMovieHandler(movie) {
+  const response= await fetch('https://react-http-9c64b-default-rtdb.firebaseio.com/movies.json',{
+    method:'POST',
+    body: JSON.stringify(movie),
+    headers: {'Content-Type': 'application/json'},
+    });
+
+    const data=await response.json();
+    console.log(data);
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+******react interview question 
+
+*(1) what is the featiures of react
+
+React Features:
+
+ JSX.=(JavaScript XML) JSX allows us to write HTML elements in JavaScript
+Components.=  building UIs much easier
+One-way Data Binding.=	Component to View: Any change in component data would get reflected in the view.     component ---state subject:"demo text"   in html code this.state.subject o/p-demo test
+			View to Component: Any change in View would get reflected in the component’s data.   event.trarget.value   in form 
+
+Virtual DOM.
+Simplicity.
+Performance.
+
+
+*(2) Can web browsers read JSX directly? ...
+ Browsers can't read JSX because there is no inherent implementation for the browser engines to read and understand them
+
+
+*(3) what is virtual dom?
+dom means document object model 
+In javascripts dom -- when i load our application on server dom is create.like html head and right side body and when i add any value in paragraph all dom will load 
+ 
+but in virtual dom its totally difference --- if you add any content in paragraph only paragraph will load
+like a lightweight copy of the actual DOM(a virtual representation of the DOM).
+
+
+
+*(4)Why use React instead of other frameworks, like Angular?
+
+because of virtual dom
+
+
+
+*(5)what are the component in react
+ Components are independent,they same as javascripts function but returnn html.
+
+
+*(6)What is the use of render() in React?    render means provide
+ Render is a method that tell react what to display
+
+*(7)what is the use of state?
+	State is used for contain data or information about the component, 
+	State allows us to manage changing data in an application. 
+
+*(8)How do you implement state in React?
+ this.setState  =------------
+
+*(9)How do you update the state of a component?
+this.setState  =------------
+
+*(10)what is props?
+Props are arguments passed into React components. we pass data from one component to anotehr component using props.
+
+*(11)how to pass props?
+function Home(){
+   return(<div>
+      //passing name prop to greeting component
+      <Greeting name=‘Tripp’/>
+   </div>)
+}
+function Greeting(props){
+   return(<div>
+    //using prop passed down
+    <p>Hi there {props.name}</p>
+   </div>
+
+*(12)What is React? Why Use It?
+React is a JavaScript library, not a framework.
+
+*(13)what is the difference between state and prop?
+Props are used to pass data from one component to another. 
+The state is a local data storage that is local to the component only and cannot be passed to other components.
+
+*(14)Why do we need keys for React lists?
+  	Keys are a unique value that we must pass to the key prop when we are using the .map().
+  	posts.map(post => <li key={post.id}>{post.title}</li>)
+
+*(15) What are the useCallback & useMemo hooks used for?
+The useCallback and useMemo hooks exist to improve our components' performance.
+
+*(17) useCallback ==return memoize function(apane cache mai pura function store karata hai aur jab lagati hai wahase uthata hai)  function ko bar bar nahi chalana hai copy fix karado  rendom number ek bar generate ho gaya to fix hota hai
+		The useCallback hook is used when you have a component in which the child is rerendering again and again without need.
+
+		****callback are a way to make sure certain code doesnt execute until other code has already finished execuation.
+
+	agar hamane usecall back hook use nahi kiya and ye wala function child mai usaka reference hoga tab  to function  bar bar render hoga rerender hoga   
+	
+***yaha apane cache mai hi pura function store karata hai aur dubara load karane par udhar se hi leta hai	(koi function bar bar call hone se usaki performance weak hoti hai)
+	
+	they will not automatically run on every render.
+
+	
+******The useCallback Hook only runs when one of its dependencies update.
+
+This can improve performance.
+
+
+(16)useMemo hook==  return memoize value (apane cache mai ki value(result) store karata hai aur jab lagati hai wahase uthata hai)
+	child ki rendring ko rok dega sirf ek bar hi render hoga
+
+	while useMemo is used to memoize expensive functions to avoid having to call them on every render.
+
+	we avoid to call a function every render
+
+The useCallback and useMemo Hooks are similar. The main difference is that useMemo returns a memoized value and useCallback returns a memoized function
+
+
+
+*(16)
+**react framment  //fragement allow us to writre clean up code  <></>
+******introducing react portal
+
+*this is also used to write a clian up code
+
+ **portals need two things (1) you need a place you wanna port
+		        (2) 	then let the component know	
+
+//kai bar hame root ke bahar code likhana padata hai
+//if  you want to write the code outside the root we use portal
+
+in (index.html)
+
+<div id="root"></div>   //ye hai root root
+<div id="other-root"></div>   //ye hai root ke bahar ka root	
+
+
+
+**imp topics::
+
+
+
+************************************************************************************************************************
+************************************************************************************************************************
+
+
+
+
+**destructring==== Destructuring is a JavaScript expression that allows us to  extract data from arrays,  objects, and maps and set them into new, distinct variables.
+
+const myarr=['x','y','z'];
+
+const[x1,x2,x3]=myarr;
+
+console.log(x1);
+console.log(x2);
+console.log(x3);
+
+
+
+
+**difference between rest operator/parameter and spread operator
+		
+rest operator /parameter:  allows a function to accept an indefinite number of arguments as an array
+ function to get the all the  parameter
+
+ function sum(b,...a){
+	console.log(b,a)
+}
+sum(5,6,7)
+
+o/p-- b=5 and a=67
+
+
+spread operator  --- 
+
+**its a spread operators==The JavaScript spread operator ( ... ) allows us to quickly copy all  part of an existing array or object into another array or object.  //expand array
+  var array=[1,2,3];
+var array1=[...array,4,5,6]   spread 4,5,6 this element in ...array this array
+
+o/p--1,2,3,4,5,6
+
+
+**difference between var and let:
+	var & let  ===var is functional scoped and let in block scoped   
+
+	function checks(){
+		var a=10;
+	if(true){
+	var a=20;
+	console.log(a);
+}
+console.log(a)
+}
+checks()
+	o/p-----20
+	           20
+
+
+
+**let  === 	
+	function checks(){
+		let a=10;
+		if(true){
+		let a=20
+		console.log(a)
+}
+cosole.log(a);
+}
+checks();
+	o/p==20
+	          10
+
+
+
+
+*****(**)closures === parent child
+
+const outerfun=(a)=>{
+let b=10;
+const innerfun=()=>{
+let sum=a+b;
+console.log(sum)
+}
+innerfun();
+
+}
+outerfun(5)
+
+
+o/p 15
+
+
+
+
+*******(higher order function) ===including forEach, map, CompactMap, flatMap, filter, reduce, sort, and sorted.
+
+  *accept a function as an argument
+  * return functions
+
+
+*splice :  The splice() method adds and/or removes array elements.
+****
+
+
+ slice create copy original array
+
+const fruits = ["Banana", "Orange", "Apple", "Mango"];
+
+const citrus = fruits.slice(1, 3);  // Gets index 1 and 2 → ['Orange', 'Apple']
+
+##### it works perfectly with both strings and arrays!
+
+❓ “Does slice(1, 3) remove index 1 and 3 from the array?”
+
+No, it just copies index 1 and 2 (not 3!) into a new array.
+The original array stays the same.
+
+//first 2 define position 
+fruits.splice(2, 0, "Lemon", "Kiwi");
+
+
+
+splice - splice() modifies the original array
+
+### splice() is a method that only works on arrays, not strings.
+
+
+****At position 2, remove 2 items:  splice(start, deleteCount)
+
+const fruits = ["Banana", "Orange", "Apple", "Mango", "Kiwi"];
+//2 define a position second to kiti remove karayache ahet.
+ console.log(fruits.splice(2, 2));
+
+console.log("fruits",fruits);
+
+*****************************************************************************
+
+*slice
+
+Slice the first 5 positions:
+
+let text = "Hello world!";
+let result = text.slice(0, 5);
+
+o/p-- Hello
+
+From position 3 to the end:
+
+let result = text.slice(3);
+
+o/p--- lo world
+
+
+
+
+
+
+
+*foreach   ---------    
+
+foreach works on array only 
+
+const numbers = [1, 2, 3, 4, 5];
+
+numbers.forEach((number) =>
+ console.log(number + 1));
+
+🔁 forEach()
+Used to loop over an array and do something (like log, change DOM, etc.).
+
+❌ Does not return a new array.
+
+✅ Used for side effects like console logging, DOM changes, saving to DB, etc.
+
+❌ Cannot be chained.
+
+javascript
+Copy
+Edit
+const numbers = [1, 2, 3];
+numbers.forEach(num => {
+  console.log(num * 2); // side effect
+});
+// N
+
+
+
+*map  bind with each element
+
+🔄 map()
+Used to transform each item in an array and return a new array.
+
+✅ Returns a new array.
+
+✅ Useful for data transformation.
+
+✅ Can be chained with filter(), reduce(), etc.
+
+javascript
+Copy
+Edit
+const numbers = [1, 2, 3];
+const doubled = numbers.map(num => num * 2);
+
+console.log(doubled); // [2, 4, 6]
+
+
+var arr = [ 1, 2, 3 ];
+
+var arrDoubled = arr.map(function(num) {
+  return num * 2;
+});
+
+console.log(arrDoubled); // [ 2, 4, 6 ]
+
+
+
+*****(8)pass by value(doesnt affect the original values ) and pass by refference --affect the original values  
+
+
+pass by value doesnot affect the original values  //both will work independently
+
+let a=5;
+
+let b=a;   b=5
+
+//first output  5,5
+
+b=a+5  5+5= 10
+
+console.log(a);
+
+console.log(b);
+
+//then output 5,10
+
+let b = a; → b gets a copy of a, not a reference to a.
+
+Then b = a + 5; → this just updates b, not a.
+
+So a stays 5, and b becomes 10.
+
+💡 Summary:
+Pass by value means changes to b don't affect a.
+
+🔍 What is pass by value?
+In JavaScript:
+
+Primitive types like number, string, boolean, null, undefined, symbol, and bigint are passed by value.
+
+This means: when you assign one variable to another, a copy of the value is made. They work independently.
+
+
+**pass by refference --affect the original values  
+
+var a=6;
+var b=3*2;
+
+console.log(a==b);  //true
+
+var dog=["bark"]
+var cat=["bark"]
+var bird=dog;
+
+console.log(dog==cat); //false
+
+console.log(bird==dog); //true
+
+function modifyValue(x) {
+    x = x * 2;
+}
+
+// pass by value
+
+let num = 5;
+modifyValue(num);
+console.log("Original value:", num);
+
+// pass by reference affect original value
+function modifyValue(obj) {
+    obj.value = obj.value * 2;
+
+}
+let myObj = { value: 5 };
+modifyValue(myObj);
+console.log("Modified value:", myObj.value); // Output: Modified value: 10
+
+//when you pass an object to a function, you're passing a reference to that object
+
+
+
+
+**callback function:
+
+you can also pass a function as an argument to a function
+
+Benefit of Callback Function
+The benefit of using a callback function is that you can wait for the result of a previous function call and then execute another function call.
+
+//  program that shows the delay in execution
+
+function greet() {
+    console.log('Hello world');
+}
+ 
+function sayName(name) {
+    console.log('Hello' + ' ' + name);
+}
+
+// calling the function
+setTimeout(greet, 2000);
+sayName('John');
+
+Hello John
+Hello world
+
+
+you can also pass a function as an argument to a function
+// function
+function greet(name, callback) {
+    console.log('Hi' + ' ' + name);
+    callback();
+}
+
+// callback function
+function callMe() {
+    console.log('I am callback function');
+}
+
+// passing function as an argument
+greet('Peter', callMe);
+
+
+
+*** Asynchronous =  doesn't happen at the same time
+
+	AWAIT= The await keyword is used inside the async function to (wait for the asynchronous operation)
+
+	async and await==async makes a function return a Promise
+		
+		await makes a function wait for a Promise
+
+
+// a promise
+let promise = new Promise(function (resolve, reject) {
+    setTimeout(function () {
+    resolve('Promise resolved')}, 4000); 
+});
+
+// async function
+async function asyncFunc() {
+
+    // wait until the promise resolves 
+    let result = await promise; 
+
+    console.log(result);
+    console.log('hello');
+}
+
+// calling the async function
+asyncFunc();
+Output
+
+Promise resolved
+hello
+
+
+
+
+*******react details another interview questions*********
+
+uselocation ===returns the current location
+
+
+
+
+**react events:
+	React events are named using camelCase, rather than lowercase.
+
+	React event handlers are written inside curly braces:
+
+onClick={shoot}  instead of onClick="shoot()".
+
+
+***Why do we need to React Router?
+
+Enables multiple views in a single application by defining multiple routes in the React application.
+
+
+****How is React routing different from conventional routing?****
+
+
+	(react-router)
+								(convential-router)
+
+           Single HTML page                                               		  Each view is a new HTML file
+	
+The user navigates multiple views in the same file			The user navigates multiple files for each view
+
+
+The page does not refresh since it is a single file			The page refreshes every time user navigates
+(navigate kelynantar page refresh hot nahi)				(har ek navigation pe page refersh hoga)
+
+Improved performance                                                                                       Slower performance	
+(thats the reson improve performance)				(thats the reson slower performance)
+			
+
+**what is mean by control and uncontrol form in react?
+
+****In a controlled component, form data is handled by a React component. The alternative is uncontrolled components, where form data is handled by the DOM itself.
+
+*   on change    value={name }  we add in text box  hum text box mai jo koi bhi add karate haii wo dynamically print hoga control rahega ;
+*   agar apake 1 time hi data lena hai to use ref karake data le sakate ho
+
+
+
+
+****************************************************************************************************************************************************************************************************
+
+
+***Additional questions: 
+	bootstrap4: 
+	(1)npm install react-bootstrap bootstrap
+	(2)npm add react-bootstrap bootstrap
+	(3)import 'bootstrap/dist/css/bootstrap.min.css';      * (App .js) *
+	 **import Button from 'react-bootstrap/Button';
+	<Button variant="primary">Click Me!</Button>**
+
+
+
+*****Typecripts :
+	*TypeScript is a programming language developed and maintained by Microsoft.
+	 *Typescripts is the superset of javascripts.
+.
+	**difference between typescripts vs javascripts**
+
+	javascripts                                                            typescripts
+
+(1)LooselyType	                                                                           (1)StronglyType(c,c++,java,typescript)\5[
+(javascripts,php etc).
+
+*There is no need to create datatype    
+
+                                                       *There is need to create datatype
+var a=20;                                                                                                      int num1="Adil";(compile time error show karata hai)
+a variable mai kisi bhi type ka data store kar skata hu.							int value hi deni padegi
+
+	
+(2)Scripting programmin language				(2)Typescripts is known as oop(adstarction,inheritance that type off) language			
+	
+(3)javascripts havenot interface					(3)typescripts have interface concepts
+
+(4)not compile time error (					(4)compile time error( run karane se pahile error milate hai)
+run karane ke bad hi error milate hai)
+
+(5)not generics used 						(5)generics used
+
+(6).js							(6).ts
+									
+(7)it is directly runon the browser				(7)its not directly run on browser(type 								scripts ka code convert karana padata 									hai javascripts mai)
+	
+
+
+
+Syntax of typescripts:
+Example: TypeScript and Object Orientation
+
+class Greeting { 
+   greet():void { 	
+      console.log("Hello World!!!") 
+   } 
+} 
+var obj = new Greeting(); 
+obj.greet();
+
+o/p : Hello World
+
+
+
+
+
+***axios get functionality:
+
+//refer udemy cource code 
+
+const useAsyncStuff = () => {
+  const [data, setData] = useState(null);
+  const [error, setError] = useState("");
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    const loadAsyncStuff = async () => {
+      try {
+        const response = await fetch(/* ... */);
+        const json = await response.json();
+
+        setData(json);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoaded(true);
+      }
+    };
+
+    loadAsyncStuff();
+  }, []);
+
+  return { data, error, loaded };
+};
+
+
+
+*****useparam hook ====return  to the current value of an url 
+const param=useParam()
+console.log(param.productId);
+
+
+
+***Nested Route:
+(..refer 275 video)
+we can define route in our component and load ,more content
+
+**dusare component mai bhi hum route define kar sakate hai. 
+**dusare component mai hum dusara component define karate hai.
+
+
+
+********************************************************************************************************************************************************
+
+*****Questions on ES6 fundamentals : 
+
+3. What are the limitations of React?
+react  is not a framework its a library.
+It might be difficult for beginner programmers to understand React.
+
+
+
+
+
+//practice code:
+
+// Online Javascript Editor for free
+// Write, Edit and Run your Javascript code using JS Online Compiler
+
+// Online Javascript Editor for free
+// Write, Edit and Run your Javascript code using JS Online Compiler
+
+// Online Javascript Editor for free
+// Write, Edit and Run your Javascript code using JS Online Compiler
+
+
+// let myFunction=(a,b)=>a+b;
+
+// console.log(myFunction(3, 4));
+
+//hoisting
+// console.log(a);
+// let a=10;
+
+// sum(2,3);
+// function sum(a,b){
+// var add=a+b;
+// console.log(add)
+// }
+
+// foo(); // This works even though the function is called before its declaration.
+
+// function foo() {
+//   console.log("Hello, hoisting!");
+// }
+
+
+//scope chain & lexicle scope
+
+// var a = "hello guys"; // it's a global scope
+
+// function first() {
+//     var b = "how are you"; // Enclose the string in quotes
+//     second();
+
+//     function second() {
+//         var c = "myself vinod thapa";
+//         // inner function can access the variables of the parent function and global variable
+//         console.log(a + b + c);
+//     }
+// }
+
+// first();
+
+
+//strict mode
+
+
+// "use strict";
+
+// function sum(a, b) {
+//     var add = a + b; // use 'var', 'let', or 'const' to declare the variable
+//     console.log(add);
+// }
+
+// sum(10, 10);
+
+//iterators
+
+// var mydata = [1, 2, 3, 4];
+
+// for(var item of mydata) {
+//     console.log(item);
+// }
+
+// //exponetation
+// var result=3*3;
+
+// console.log(result);
+
+//javascripts array function:
+//pop and push
+// var myArray = [1, 2, 3];
+// var poppedElement = myArray.pop(); // Removes 3
+// myArray.push(4); // Adds 4 to the end
+
+// console.log(myArray);
+
+//toString
+// var myArray = [1, 2, 3];
+// var arrayString = myArray.toString();
+// console.log(arrayString);
+
+// var myArray=[1,2,3,4];
+// //index(2),how many element you want to remove(2) , add 'a'
+// myArray.splice(2,2,'a');  //[ 1, 2, 'a' ]
+
+// console.log(myArray);
+
+
+// var myArray = [1, 2, 3, 4, 5];
+// var newArray = myArray.slice(1, 3);
+
+// //1 se 3 index ke bich me ke lega 
+//  console.log(newArray); //[ 2, 3 ]
+
+
+//shift() and unshift()
+
+// var myArray = [1, 2, 3];
+// var shiftedElement = myArray.shift(); // Removes 1
+// //console.log(myArray);
+// myArray.unshift(6); // Adds 0 to the beginning
+// console.log(myArray);
+
+
+// for each traverse each element
+
+// const numbers = [1, 2, 3, 4, 5];
+
+// numbers.forEach((num) => {
+//     console.log(num + 1);
+// });
+
+//bind each element
+// const numbers=[1,2,3,4,5];
+
+// var mappeddata=numbers.map((data)=>{
+// console.log(data);
+// var addnumber=data*3
+// console.log(addnumber);
+// })
+
+// here we have pass the value
+// original value remains same
+
+// function modifyValue(x) {
+//     x = x * 2;
+// }
+
+// let num = 5;
+// modifyValue(num);
+// console.log("Original value:", num); // Output: Original value: 5
+
+//pass by refernce
+
+
+// // pass by reference affect original value
+// function modifyValue(obj) {
+//     obj.value = obj.value * 2;
+// }
+
+// let myObj = { value: 5 };
+// modifyValue(myObj);
+// console.log("Modified value:", myObj.value); // Output: Modified value: 10
+
+//objects in JavaScript are passed by reference, changes made to the object inside the function affect the original object in the calling code.
+//when you pass an object to a function, you're passing a reference to that object
+
+
+// function a(){
+//     console.log("a called");
+// }
+// function sayName(name){
+//      console.log('Hello' + ' ' + name);
+// }
+
+// setTimeout(a, 2000);
+// sayName('gajendra');
+
+//you can also pass a function as an argument
+// function a(){
+//     console.log("a called");
+// }
+// function sayName(name){
+//      console.log('Hello' + ' ' + name);
+// }
+
+// //you can also pass a function as an argument
+// sayName('gajendra',a());
+
+//promices
+//asyncFunc() function wait for call (Promise) after that it will call
+// let promise = new Promise(function (resolve, reject) {
+//     setTimeout(function () {
+//         resolve('Promise resolved');
+//     }, 4000); 
+// });
+
+// // async function
+// async function asyncFunc() {
+//     // wait until the promise resolves 
+//     let result = await promise; 
+//     console.log(result);
+//     console.log('hello');
+// }
+// // calling the async function
+// asyncFunc();
+
+//simpe await use 
+// function testedfunction() {
+//         console.log("hello");
+// }
+
+// async function asyncfunction(){
+    
+//     let mydata= await testedfunction();
+//     console.log("i am async function");
+// }
+
+// asyncfunction();
+
+
+// destructure
+
+// const myarr=['x','y','z'];
+
+// const[x1,x2,x3]=myarr;
+
+// console.log(x1);
+// console.log(x2);
+// console.log(x3);
+
+//rest operator/parameter:  
+//...a parameter
+//  function sum(b,...a){
+// 	console.log(b,a)
+// }
+// sum(5,6,7,8)
+
+//spread operator
+
+//   var array=[1,2,3];
+// var array1=[...array,4,5,6] 
+// console.log(array1);
+
+//let and var
+//let is block scoped and var is functional scoped
+function check(){
+    
+    let a=10;
+    if(true){
+        let a=20
+        console.log(a);
+    }
+    console.log(a);
+    
+}
+check();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

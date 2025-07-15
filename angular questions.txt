@@ -1,0 +1,960 @@
+
+
+
+component.html
+
+employee.name   input madhun value janar ani .ts file shi bind honar ani input madhe value dileli print honar
+
+component.ts file
+
+employee:Employee=new Employee();   empty data asanar pahila
+
+
+console.log(this.employee)
+
+
+
+
+Angular
+
+(1).observable and subscribe
+
+=> observable and subscribe like a radio station observable is channel and without the subscribtion you can't see 
+radio channel(radio channel) 
+
+example=> myObj:Observable<any>;
+
+		this.myObj=new Observable(emmiter)
+		emmitter.next("login user")
+}}
+
+	this.myobj.subscribe((data)=>{
+console.log("hello"+data)})
+
+o/p --- hello login user
+
+
+without subscribe you cant print the value of observables
+
+
+
+
+(2).what is mean by JIT and AOT
+
+=> jit means (just in time) AND AOT means (ahead of time) at an earlier
+
+ jit                                                              AOT
+
+1. load the application slower than aot                        1.load the page more quickly than jit                          
+   because it need time to compile the application
+	when running for the first time
+
+
+2.following command use jit 						  2.following command use aot
+ng Build and ng Serve                                             ng build --aot,ng serve --aot
+
+
+3. it download the compiler and compile                        3.It doesnt download compiler because AOT already have compiles code     
+  the application before displaying
+
+
+
+
+
+(3).Explain the @Component Decorator
+
+=>  component decorector provide aditional metadata how to process and initiate
+
+@this is @component is a decorator
+ 
+@componet({
+selector : 'app-root'
+templateUrl:'/app.component.html'
+template ? :string
+
+})
+
+
+another example
+this is a decorector
+@Component({selector: 'greet', template: 'Hello {{name}}!'})
+class Greet {
+  name: string = 'World';
+}
+
+you can search on google to anothers decorators 
+
+
+
+(4). what are the advantages of angular
+
+It supports two-way data-binding.
+It follows MVC pattern architecture.
+It supports static template and Angular template.
+You can add a custom directive.
+It also supports RESTfull services.
+Validations are supported.
+
+
+(5)    		 AngularJS                                   Angular
+
+
+Language		JavaScript						  TypeScript
+ 
+Architecture      Supports Model-View-Controller design       Uses components and directives
+
+Mobile support    Not supported by mobile browsers            Supports all popular mobile browsers
+ 
+Dependency Injection     Doesn’t support 					Supports
+
+
+
+
+
+(6)what are the essential component in angular
+
+
+
+(1)component => 
+
+  component are the building block of an angular application.
+  each component consist of typescripts class contaiing a decorator,template,and style
+
+header ke liye alag as componenet footer ke liye alag componenet
+
+ app.component ye hamara default component hai
+app.componenet.css,html,ts,spect.ts,module.ts file hoti hai
+
+   ng g c democomponent
+
+component generate karane ke bad app.module.ts file mai import {apake componenet ka nam} from part , declaration apake componenet ka nam 
+automatically apake app.module.ts file mai add hoga (badame app ye componenet kahipe bhi use kar sakate ho)
+
+
+
+(2)template=>  (what is the difference between template and template url)
+temaplte are the form of html tag that are present in a component .these template are used to declare how a componenet must be renderd (show)
+
+@component({
+selector:[app-root]
+template:<h1> <p> hello {{title}}</h1>                    template mai paragraph or other field auto generate nahi hota this is drobwak ok template.
+template url: './app.component.html'   ----ess file mai hum html code likhenge
+
+hame upper diye hua nahi karana hai hum template url use karenge
+
+styles:[
+
+h1{
+color:yellow
+}
+]
+})
+
+
+(3)Modules=>modules are also considered as building block in angular // its a complete features in your application like compoenent1,component2,pipes,services
+  when we have group of functionnatlity thats time we use module
+
+
+(userauth) is a complete module 
+
+in the user auth login,register,forgot password,api call and so on.
+
+app.module.ts is a default module of your application
+
+example ------
+
+
+In the (app.module.ts) file
+
+app module is a master module
+
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppComponent } from './app.component';
+
+@NgModule({
+  imports: [BrowserModule], another created module we import here like imports: [userauthModule]
+  declarations: [AppComponent], --------- another created componenet we create in this declaration
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+ng g m modulename (userauth)
+
+
+(in the user auth module (userauth.module.ts) declarations: [logincomponent], export [logincomponent] u can use this login componenet anywere  we can declare a multiple component
+and in the app.module.ts we have to import module which one you created like imports: [userauthModule]
+
+
+@@@@@ why we use module 
+signup,login,register,forgotpassword we have something common apis this time we dont need to make seperate componenets that the reson 
+ modules comes in tje modules we can declare multiple componenet.
+
+
+(4)services=> comman data means you want to use same data to header as well as footer this data we have to add in services
+
+ productserviices ---getprooduct--- ggggg,hhhhhh,jjjjjj
+
+comonent1.ts   
+ productserviices.getproduct
+
+componenet2.ts
+productserviices.getproduct
+
+and alo we add apias in services for fetch in any component
+
+
+(5)metadata=>
+
+export class AppComponent {
+   @Environment(‘test’)  this is a metadata
+   appTitle: string = 'Welcome';
+}
+Here, the @Environment is the metadata applied to the property appTitle and the value given is ‘test’.
+
+export class AppComponent {
+   constructor(@Environment(‘test’ private appTitle:string) { }
+}
+
+
+
+
+
+
+(7).what is two way data binding 
+
+component to view and view to component
+
+
+
+
+(8). what is authentication and autherization in angular
+
+authentication : during login , credientials are sent to an authentication api this api is present in on the server and validation is done there 
+after a jwt is returned this token has information about the user and this token is used for identify the user this process is called authentication.
+
+**jab hum username and password fire karate hai to server mai hame generate token ki api likhani padati hai ye api check karati hai ki username aur pass 
+sahi hai kya agar sahi hai to  1 token return karati hai uss token ke through hum hamre api access kar sakate hai agar hame /heloo page open krana ho to 
+hame /hello api ke saat token bhi bhejana padata hai **
+
+ 
+autherization  :  after authentication users are given various levels of permission accesss some users may have access to all of the pages and some might 
+not. this process of restrictiong content is called authorization.
+			
+
+(9).Explain the lifecycle hooks in Angular 
+
+constructor,ngOnchanges,ngOninit,ng doCheck, ng afterviewInit
+
+pahile constructor call hota hai
+then life cycle hook(method) like ngoninit,ngoncahanges and so on 
+
+export class component1 implements OnInit,onchanges {
+
+}
+
+ngoninit(){
+}
+
+ngonchanges(){
+}
+
+
+(oninit is a interface  you can implements oninit,onchanges,ngdocheck )
+
+
+
+(1).ngOnChanges() -- ye ek yeasa life cycle hook hai jo argument ke saat kam karata hai
+
+angular hame chance deta hai ki ye hook ko pakadake (ngOnChanges) apana koi bhi code execute kar sakate hai jab constructor call hua usake baad hame kuch
+karana hai ya koi aur function karana hai to hum yaha kar sakate hai
+
+koi bhi input ki value change hue tab hame kuch karana hai to hum yaha kar sakate hai
+
+
+esi tarah hum koi bhi life cycle hook ko use kar sakate hai aur usame apana code hook kar sakate hai
+
+note---( ngonchanges tabhi call hota hai jab bhi input textbox mai value changes hoti hai )  input text box ki value app esame call kar sakate ho
+
+(refer mobile photos)
+
+
+(2)ngdocheck() ---- koi bhi change dettect hoga to tabhi ye ngdocheck() hook chalega means kidhar input pe change ho gaya ,button pe click kiya yesa koi bhi changes
+				detect ho gaya to ye hook chalega.  refer mobile photos
+
+(3)ngAfterContentinit() ------ jab hum ngcontent hamare project me use karate aur initialized karate hai tab ye ngaftercontentinit chalata hai <ngcontent></ngcontent>
+				(https://xpertuto.com/how-to-use-ngaftercontentinit-lifecycle-hook-in-angular/) -- refer this
+* ngAfterContentInit is invoked only once after three lifecycle hooks.oninit.onchange,docheck   --   
+* 
+
+	
+(4)ngAfterContentChecked() -------  jab hamare content mai changes detect honge tab he hook call hoga (every time we make changes in the view)
+(https://xpertuto.com/ngaftercontentchecked-lifecycle-hook-in-angular/)
+
+//in our case ,** ngAfterContentChecked lifecycle hook will be invoked after 4 lifecycle hooks (ngOnChanges,ngOnInit,ngDoCheck,ngAfterContentInit).
+<ng-content></ng-content>==<p> tag
+
+(5)ngAfterViewinit() ---- hamara component(child component) puri tarah se initialize hota hai tab ye hook call hota hai @viewchild
+
+ref- (https://xpertuto.com/angular-ngafterviewinit-lifecycle-hook/)
+called after the component's view, and its child views, have been initialized
+			
+
+(7)Ngondestroy   --- jab hamara component destroy hota hai dom se tab usake destroy hone ke pahile ye hook call hota hai
+
+    hum  cleanup kar rahe hai means ek component ka effect dusare mai nahi chahiye tab hum ng on destroy mai remove kar sakate hai
+
+For example, if a component subscribes to an observable in the ngOnInit lifecycle hook and doesn’t unsubscribe from that observable, the subscription will remain active until the application is closed. 
+
+This can cause memory leaks and performance issues if the component is used frequently in the application.
+
+To prevent this, we can use the ngOnDestroy lifecycle hook to unsubscribe from any subscriptions that are no longer needed.
+
+    refer mobile photos 
+
+example for NgOndestroy ::
+
+  ngOnInit() {
+    this.getUserOrgRoles();
+    this.fetchWorklists(true);
+
+    this.worklistSubscription = this.worklistService.worklistUpdated.subscribe(() => {
+      this.fetchWorklists(this.showActiveWorklists);
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.worklistSubscription) {
+      this.worklistSubscription.unsubscribe();
+    }
+  }
+
+
+
+
+(11) How are Angular expressions different from JavaScript expressions?
+
+One major difference between Angular expressions and JavaScript expressions is that Angular expressions are compiled while JavaScript expressions are not.
+
+
+Angular expressions support some additional features such as filters and directives which aren't available in JavaScript expressions.
+
+//this is a example of @Input
+
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-child',
+  template: `
+    <h2>Child Component</h2>
+    <p>Received value from parent: {{ receivedValue }}</p>
+  `
+})
+export class ChildComponent {
+  @Input() receivedValue: string;
+} 
+
+@Component({
+  selector: 'app-parent',
+  template: `
+    <h1>Parent Component</h1>
+    <app-child [receivedValue]="parentValue"></app-child>
+  `
+})
+export class ParentComponent {
+  parentValue = 'Hello from parent!';
+}
+
+
+
+
+(12). @Input
+
+	hum child component ki property extract karatke parent mai use kar sakate hai
+
+	pass data from parent to child @Input lagake hum child compnent mai value get kar sakate hai print kar sakate hai 
+	
+	
+	child.component.ts
+	
+	@Input placeholdertest:String
+
+
+	child.component.html
+	
+	<input type="text" >
+
+
+		**  abb edhar hum log parent componet mai placeholder ki property mai value add kara sakte hai
+
+		@@ parent.component.html
+	
+
+		<childcompomnent [placeholdertest]="search in ux trends"> </childcomponent>
+
+		// ye value hum search in ux trends hardcoded la rahe hai esae hame dynamically lete hai
+
+					<childcompomnent [placeholdertest]="mytext"> </childcomponent>
+
+		@@ parent.component.ts
+
+			mytext = "anupam"    //ye parent class se dynamically ayega child class ke textbox ke placeholder mai
+
+
+search in ux trends child ke inputtext box ke andar dikhega yese hum child ke property mai value add kar sakate parent componenty se using @Input
+
+
+
+**** What are Angular Pipes? 
+
+ You can think of them as makeup rooms where they beautify the data into a more desirable format. They do not alter the data but change how they appear to the user. 
+
+ Pipes are defined using the pipe “|” symbol. 
+
+
+   <h1>
+
+    Date: {{ dateToday  }} <br>
+
+    Date Pipe: {{ dateToday | date | uppercase}}<br>
+
+    Date Pipe: {{ dateToday | date: 'short' | lowercase}} <br>
+
+    Name: {{ name | uppercase}} <br>                    // GAJENDRA
+
+    Name: {{ name | slice:3}}				// endra
+
+</h1>
+
+## for creating the custom pipe use (custompipe implements PipeTransform )
+
+Types of directives:
+
+1. Component directives :  have selector,template,directives
+
+@Component({
+    selector: 'my-app',
+    template: `
+    <shopping></shopping>
+    `,
+    directives: [ShoppingListComponent]
+})
+
+
+2. Structural directives 
+
+These directives are generally used to manipulate DOM elements.
+Every structural directive has a ‘ * ’ sign before them.
+We can apply these directives to any DOM element.
+
+
+
+<div class="details" *ngFor="let x of details" >
+          <p>{{x.name}}</p>
+          <p> {{x.address}}</p>
+          <p>{{x.age}}</p>
+            </div> 
+ In the above example, we can *ngIf and *ngFor directives being used.
+
+*ngIf is used to check a boolean value and if it’s truthy,the div element will be displayed.
+
+
+3. Attribute Directives
+
+These directives are used to change the look and behaviour of a DOM element.
+
+[ngStyle] [ngClass]
+
+<div class="details" [ngStyle]={color:green} ></div>
+
+
+
+[ngClass]      
+
+
+<div class="searchdiv" [ngClass] ="{changedbackground: searchvalue!=''}" >   if searchvalue!='' if  this condition will true apply changedbackground style
+</div>
+
+css
+
+.changedbackground{
+color:red
+}
+
+
+*How to create a custom directive?
+
+(ng g directive blueBackground)
+
+The following directive will be generated. Manipulate the directive to look like this:
+
+      import { Directive, ElementRef } from '@angular/core';
+
+      @Directive({
+       selector: '[appBlueBackground]'
+      })
+      export class BlueBackgroundDirective {
+       constructor(el:ElementRef) {
+         el.nativeElement.style.backgroundColor = "blue";
+       }
+      }
+
+Now we can apply the above directive to any DOM element:  <p appBlueBackground>Hello World!</p>   
+
+Hello World! ka color blue ho jayega
+
+
+ ** What is two way data binding in Angular?
+
+data transfer between component class and its template is called two way data binding
+
+*example:-
+
+app.component.ts
+
+import { Component } from "@angular/core";
+ 
+@Component({
+  selector: "app",
+  templateUrl: "./app.component.html",
+})
+export class AppComponent {
+  data = "This is an example component of two way data binding.";
+}
+app.component.html
+
+<input [(ngModel)]="data"  type="text">
+  <br> <br>
+  <h2> You entered the data:  {{data}}</h2>
+
+
+
+**What are Decorators and their types in Angular?
+ 
+ typescripts features used for passing metadata to angular application
+
+types of decorators
+
+	(1)classdecorators 
+		@ngModule,@component
+
+	(2)property decorators
+		@Input  @Output
+
+	(3)Method decorators
+		@HostListner 
+
+	(4)parameter decorator
+		@Inject
+
+	example   Suppose you have a service called DataService that you want to inject into a component called MyComponent. Here's how you could do it
+			here you can do it using @inject
+ @Component({
+  selector: 'app-my-component',
+  template: '<h1>{{ data }}</h1>'
+})
+export class MyComponent {
+  constructor(@Inject(DataService) private dataService: DataService) {}
+  
+  get data() {
+    return this.dataService.getData();
+  }
+}
+
+	starts with @ symbol 
+
+
+
+**What are RxJs in Angular ?
+
+Reactive Extensions for JavaScript
+
+It is used to enable the use of (observables) in our JavaScript project
+
+Most of the time, rxJs is used in HTTP calls with angular
+
+Example: The following is a simple example of how RxJs can be utilized with HTTP calls.
+
+  let  stream1 = httpc.get("https://www.example.com/somedata");
+  let stream2 = stream1.pipe(filter(x=>x>3));
+  stream2.subscribe(res=>this.Success(res),res=>this.Error(res));
+
+
+
+
+**. Explain string interpolation and property binding in Angular.
+
+*String interpolation and property binding are parts of data-binding in Angular.
+*Data-binding is a feature in angular, which provides a way to communicate between the component(Model) and its view(HTML template).
+*String interpolation and property binding allow only one-way data binding.
+*String interpolation uses the double curly braces {{ }}   {{ 2 + 2 }} 
+
+ Property binding uses the square brackets [ ] syntax
+<input [value]="title" />         title = 'My Angular App';
+
+****
+
+**Explain the concept of Dependency Injection? in angular
+
+import { Injectable } from '@angular/core';
+     @Injectable({
+       providedIn: 'root'
+     })
+     export class TestService {
+       importantValue:number = 42;
+       constructor() { }
+       returnImportantValue(){
+         return this.importantValue;
+       }
+     }    
+
+
+ @Component({
+        selector: 'app-test',
+        templateUrl: './test.component.html',
+        styleUrls: ['./test.component.css']
+      })
+      export class TestComponent implements OnInit {
+        value:number;
+        constructor(private testService:TestService) { }
+
+        ngOnInit() {
+          this.value = this.testService.returnImportantValue();
+        }
+      }
+
+
+
+  @@ What are HTTP interceptors ? (intercept) to stop or catch somebody/something that is moving from one place to another.
+
+*interceptors allow us to intercept incoming and outgoing HTTP requests.
+*They are capable of handling both HttpRequest and HttpResponse
+
+hamene agar token generate karake apis authticate kiya to wo token hame har ek function mai pass krana padega access karane ke liye
+agar hame single employee print karana hoga to getEmployee() iss method ko hame wo token pass karana padega yese karake jitane bhi method app chala rahe ho 
+unako hame sabako token pass karana padega ** lekin hum intercepter ki hepl se intercpter mai hi token add karake rakh sakate hai hame sare ke sare functions
+mai apis ko unautherized karane ke liye token pass karana nahi padega.
+
+implements HttpInterceptor
+
+ HTTP interceptors are used to intercept HTTP requests and responses globally within your Angular application
+
+ @*** Explain MVVM architecture
+      MVVM architecture consists of three parts:
+
+    Model
+    View
+    ViewModel
+ View and ViewModel are connected with data-binding (two-way data-binding in this case)
+
+
+**How do you choose an element from a component template?
+
+ directly access items in the view, use the @ViewChild directive.
+
+example : 
+     <input #example>
+
+	@ViewChild('example') input;
+
+	ngAfterViewInit() {
+ 	 console.log(this.input.nativeElement.value);
+	}
+
+
+@@**How does one share data between components in Angular?
+
+
+Parent to child using @Input decorator
+Consider the following parent component:
+
+     @Component({
+       selector: 'app-parent',
+       template: `
+         <app-child [data]=data></app-child>
+       ` ,
+       styleUrls: ['./parent.component.css']
+     })
+     export class ParentComponent{
+       data:string = "Message from parent";
+       constructor() { }
+     }
+In the above parent component, we are passing “data” property to the following child component:  
+
+ import { Component, Input} from '@angular/core';
+     @Component({
+       selector: 'app-child',
+       template:`
+         <p>{{data}}</p>
+       `,
+       styleUrls: ['./child.component.css']
+     })
+     export class ChildComponent {
+       @Input() data:string
+       constructor() { }
+     }
+
+
+
+@@### Child to parent using @ViewChild decorator
+
+ Child component:
+
+Child component:
+
+import {Component} from '@angular/core';
+     @Component({
+       selector: 'app-child',
+       template:`
+         <p>{{data}}</p>
+       `,
+       styleUrls: ['./child.component.css']
+     })
+     export class ChildComponent {
+       data:string = "Message from child to parent";
+       constructor() { }
+     }
+
+ Parent Component
+
+import { Component,ViewChild, AfterViewInit} from '@angular/core';
+     import { ChildComponent } from './../child/child.component';
+     @Component({
+       selector: 'app-parent',
+       template: `
+         <p>{{dataFromChild}}</p>
+       ` ,
+       styleUrls: ['./parent.component.css']
+     })
+     export class ParentComponent implements AfterViewInit {
+       dataFromChild: string;
+       @ViewChild(ChildComponent,{static:false}) child;
+       ngAfterViewInit(){
+         this.dataFromChild = this.child.data;
+       }
+       constructor() { }
+     }    
+
+
+Angular Interview Questions and answers with Ui Dev Guide youtube channel
+
+##1 When you add the component to your project what CLI does for you?
+
+when you add component to your angular project using angular CLI the cli perform several task
+to generate the necessary files and configuration for new component.and also generate qnique selector.
+ng g c component_name - files- html,spect,coponet.ts.scss
+
+##2 standalone=true
+1)independantly work,
+2)we dont need to declare in app.module.ts file we need to just import in app.module.ts
+and when we create another standalone component and you have use in previous stand alone componet you need to import the newly created component into previous compoent
+dont need to declare and import in app.module.ts file
+
+advantages- 1) ngModule is not required
+	    2) small bundal size, performance
+
+i have set admin component as a standalone-
+//this is standalone achive lazy loading for better performance
+then in route- path:"admin",loadComponent:()=>import('./admin/admin.component').then(m=>m.AdminComponent)
+
+#3 do you have something tables in your project and pagination
+
+#4 have you heared about infinite scroll in angular- whenever i scroll down loader will show and load data 
+ion-infinite-scroll - refer project - fetching data based on the current page - jab jab niche jayenge loader dikahake data load hoga
+
+#5 How to optimize the performance in that case what the steps will?
+
+1)lazy loading
+2)Aot compiler not jit ----- ng build --aot ng build --prod - this sutable for production
+3)use intercepter
+4)
+
+#6 how you will check the size of each module/component?what module are taking how much time. 
+
+run ng build --prod --stats-json to generate stat.json file to show the size.
+it is mostly use in aot(production)
+
+npm i source-map-explorer 
+
+#7 can we call the api from the constructor as well? 
+yes we can but its not a good practice.
+
+#8 why constructor is call before onInit?
+its javascript thing when class call every time constructor will call first.
+constructor calls by JavaScript engine immediately when the class is instantiated .
+so typescript helps us to get the type of the dependencies are defined in the constructor and finally tells Angular
+
+#9 cross orgin resource sharing error?how to handle 
+
+jab mai ui pe  localhot:4200 pe hu and bacend pe google.com pe hu  to ye match nahi karata
+esaliye ye error aata hai esako handle karane ke liye hame backend bhi local ka chahiye
+
+in backend we have to set origin like --
+Example for allowing requests from any origin:
+origin mean domain name-lo
+To allow requests from any origin-
+
+Access-Control-Allow-Origin: *
+
+
+#9 how angular application works ?
+
+1)main.js is the starting pont of angular application
+
+2)in this main.js file we have set AppModule so inside the app module   app.component will be call
+
+3)in the app module we have app.coomponent.ts and selector of this component we have set in index.html like this <app-root></app-root> here we rae set this file explicitly file <app-root></app-root> this script file is automatically injected by angular cli
+after call ng serve.
+
+4)then render the content of the app.component.html component
+
+
+afetr ng serve it will gerenerate some bundal and inject those bundal in index.html file and then compiled successfully
+
+means index.html ko milega app-root the wo call ho jayega  then wo app component me jo contect hai wo call hoga
+
+
+
+#10 how change detection works ?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 11)
+dont user subscribe just try to use onlt streams
+
+with old way (observable)
+
+usersSubscription: Subscription;
+users:string[]
+export class USerComponent implements OnInit,OnDestroy{
+
+ngOnInit():void{
+
+// this.usersService.getUsers().toObservable().then(users=>{
+
+// this.users=users;
+
+// })
+
+// this.usersSubscription= this.usersService.getUsers.subscibe((data)=>{
+
+// this.users= data;
+// })
+
+}
+
+ngOndestroy(){
+this.usersSubscription.unsubscribe();
+}
+
+}
+
+#### This is the new way ####
+
+export class UserComponent{
+
+users$ : Observable<string[]>
+
+constructor(private usersService: UserService){
+
+this.user$ = this.userServce.getUsers();
+}
+}
+
+2) change Detection avoide ( improve performance) 
+
+only for scrolling all component get render on every scrooll now  component will be render only when there is chaneg in any @input and you manually trigering the render
+
+@Component({
+selector : 'mc-users',
+templateUrl: './users.componet.html',
+changeDetection: ChangeDetectionStrategy.OnPush 
+})
+
+
+
+how change detection workd like when i click on any button it will go to parent then child 1 child 2 it goes to whoole tree
+
+it wil check old value and ne new value
+this process is async - top - to bottom check where is change happen
+
+
+change detection - 
+
+
+parent component
+
+Jab bhi yahse input se data jase jaise type karung waise waise wo child me render hoat jayega i dont dont want this i want when i all i ahve upadetd in inout and click on function using that function tat object will upadet and it will directly shows in child component.
+
+you have to use onpush in your child component
+
+
+ child component : 
+
+ChangeDetection : ChangedetectionStrategy.onpush
+
+@parentdata
+
+
+
+zone.js 
+
+
+as per your requiremnt you can call chage detection means 
+
+if in parent component we are counting 1 2 3 4 like taht and they are bind in child compoennt but in child compoenent it will trigger when when count will be 10 menas i have added condtion in child compoenent like
+
+# runOutSideAngular
+
+constructor(private cf : chnageDetectionRef,private zone:Zone)
+
+this.zone.runOutSideAngular(()=>{
+
+// zone js run this code after count > 10  every cout it will not render 
+if(counter>10){
+this.zone.run(()=>{
+
+console.log("call this afetr 10 cout")
+
+
+})
+}
+
+
+},1000)
+
+
+you can use this in api call like from parent we will get data after getting all data it will not call and show in child compoenent
+
+
+when you are hoverin gyour mouse cick that also impact on you rapplication performance
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,91 @@
+Frountend insights youtube channel
+##Top Practical Angular Interview Questions and Answers | angular coding questions
+
+1) explain the diff between one-way data binding and two-way data binding in angular
+
+1 way data binding displays data from the component class in the template
+
+eg-{{data}} or [property]="data"
+
+2 way data binding allow for both reading and writing data
+between the template and component class
+
+[(ngModel)]="data"
+
+
+3) make an HTTP GET request to retrive a list of products from a mock
+API endpoint and display them in a component.
+
+
+this.http.get("/products").subscibe((data)=>{
+this.product=data;
+})
+
+4)create a form to add new product with validation
+
+productForm:FormGroup;
+
+this.myform.formbuilder(private fb:FromBuilder){
+
+this.productForm=this.fb.group({
+myformgroungname=['',validators.required,validators.minLength(3)],
+
+
+}
+
+
+
+4) set up routing a multi-page angular application.Create
+two component,"Home" and "About" and configure navigation between them
+
+app.routing.module.ts
+
+const route:Route=[
+
+path:'/home',
+component:HomeComponent
+
+path:'/about',
+component:AboutComponent
+
+]
+
+use <router-outlet></router-outlet> in your app template to dispaly routed component
+
+
+ 5)  What is content Projection?
+
+card.component.html:
+
+selector app-card
+
+<div class="card">
+  <div class="card-header">
+    <ng-content select="[cardTitle]"></ng-content>
+  </div>
+  <div class="card-body">
+    <ng-content select="[cardContent]"></ng-content>
+  </div>
+</div>
+
+
+<app-card>
+  <div cardTitle>Title of the Card</div>
+  <div cardContent>
+    <p>This is the content of the card.</p>
+    <button>Click Me</button>
+  </div>
+</app-card>
+
+we're using the app-card component in the parent component. Inside the app-card component, we're providing content within <div> elements with the attributes [cardTitle] and [cardContent]
+
+
+How can we use common css files for multiple components?
+
+
+
+
+
+
+
+

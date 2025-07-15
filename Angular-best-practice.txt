@@ -1,0 +1,71 @@
+1)
+dont user subscribe just try to use onlt streams
+
+with old way (observable)
+
+usersSubscription: Subscription;
+users:string[]
+export class USerComponent implements OnInit,OnDestroy{
+
+ngOnInit():void{
+
+// this.usersService.getUsers().toPromise().then(users=>{
+
+// this.users=users;
+
+// })
+
+// this.usersSubscription= this.usersService.getUsers.subscibe((data)=>{
+
+// this.users= data;
+// })
+
+}
+
+ngOndestroy(){
+this.usersSubscription.unsubscribe();
+}
+
+}
+
+#### This is the new way ####
+
+export class UserComponent{
+
+users$ : Observable<string[]>
+
+constructor(private usersService: UserService){
+
+this.user$ = this.userServce.getUsers();
+}
+}
+
+2) change Detection avoide ( improve performance) 
+
+only for scrolling all component get render on every scrooll now  component will be render only when there is chaneg in any @input and you manually trigering the render
+
+@Component({
+selector : 'mc-users',
+templateUrl: './users.componet.html',
+changeDetection: ChangeDetectionStrategy.OnPush 
+})
+
+
+
+how change detection workd like when i click on any button it will go to parent then child 1 child 2 it goes to whoole tree
+
+it wil check old value and ne new value
+this process is async - top - to bottom check where is change happen
+
+
+
+
+
+
+
+
+
+
+
+change detection - 
+

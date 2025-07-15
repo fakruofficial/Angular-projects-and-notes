@@ -1,0 +1,307 @@
+ in the html - 
+
+<div *ngFor="let card of RFPCards$ | async">
+
+component.ts
+
+we dont need to subscribe (this.RFPCards$ ) just add (async )
+
+ this.RFPCards$ = this.storeService.getRFPListings();
+
+
+
+ users = [
+    { id: '1', name: 'John', isActive: true },
+    { id: '2', name: 'Jack', isActive: true },
+    { id: '2', name: 'Mike', isActive: true },
+  ];
+
+  users$ = of(this.users);
+//using pipe we can transform data . pipe alowing function one by one inside the pipe funtion transfprm data(this.users)
+//for this we dont need to subscribe and add it in another varable and use we can directly used in ui
+  usernames$ = this.users$.pipe(map((users) => users.map((user) => user.name)));
+
+UI-
+
+*ngFor="let username of data.usernames$" 
+
+//we dont need like this
+this.users$.subscribe(users)=>{
+this.username=users.name
+console.log('userss',users);
+}
+
+//it will return active users
+  filteredUsers$ = this.users$.pipe(
+    filter((users) => users.every((user) => user.isActive))
+  );
+//it will show only active users
+ <div *ngFor="let user of filteredUsers$ | async"> -->
+<!--   {{ user.name }} -->
+<!-- </div> -->
+
+
+RXJS behaviuor subject
+
+//expected data (id,name) default value=null
+  user$ = new BehaviorSubject<{ id: string; name: string } | null>(null);
+
+ngONinIt():void{
+//this update our stream
+setTimeout(()=>{
+this.user$.next({id:'1',name:'john'})
+},2000)
+}
+
+by default $user value is null after that we are setting the value on that
+
+//user mai data set hone tak wait karega then dikhega
+<div *ngIf="user$ | async as user">{{ user.name }}</div> -->
+
+
+combinedLatest we can use like this 
+
+ data$ = combineLatest([
+    this.users$,
+    this.usernames$,
+    this.filteredUsers$,
+  ]).pipe(
+    map(([users, usernames, filteredUsers]) => ({
+      users,
+      usernames,
+      filteredUsers,
+    }))
+  );
+<div *ngIf="data$ | async as data">
+  <div *ngFor="let user of data.users">
+    {{ user.name }}
+  </div>
+
+  <div *ngFor="let username of data.usernames">
+    {{ username }}
+  </div>
+
+  <div *ngFor="let user of data.filteredUsers">
+    {{ user.name }}
+  </div>
+</div>
+
+
+
+****
+observable and promices difference
+
+observable- 1)stream of data,can deliver new data during some period of time
+	    2) can ne cancel suing unsubscribe()
+	    3) in the observabel there are many operators we can use like (tap,map,takeuntil)using pipe
+	    4) lazy It won't start executing until we subscribe to it.
+promices- 1)Data is back only once
+	  2) can't be undone
+	  3) promices does't allow to add any additional methods (operator)
+	  4)It is eager — It starts executing immediately once it is defined,
+
+Note-- That's why in angular we don't use promices.
+
+
+tap operator- is like a console but in that we can handle side effect we can store the data into another object but we can't modefy it 
+ const datasource=of(1,2,3,4,5);
+		
+		datasource.pipe((value)=>{
+		console.log(value); // 1,2,3,4,5   - we can access observable values
+		
+      //store value like let a= value; }  we can't modify that value*2 ist not possible
+})   
+
+example -   getData(): Observable<any> {
+    return this.http.get<any>(this.apiUrl).pipe(
+      tap(data => {
+        // Perform side effects here
+        console.log('Data received:', data); // we can set this data anywhere.
+        // Additional actions, logging, or modifications can be done here
+      })
+    );
+
+
+#**Frequently used operators-
+Map,1)Merge , switchMap, mergeMap, flatMap, concatMap, exhaustMap in RxJS
+
+
+2) SwitchMap Operator (switchMap): 
+
+    <div *ngIf="data$ | async as data">
+      {{ data }}
+    </div>
+  `,
+})
+export class ExampleComponent {
+  data$ = this.http.get('/api/data').pipe(
+    switchMap(response => {
+      // Process the response and return a new observable
+      return this.http.get(`/api/other-data/${response.id}`);
+    })
+  );
+
+In this example, switchMap is used to switch from the first HTTP request to a second one based on the response from the first request. 
+This is a common pattern in Angular applications when dealing with multiple asynchronous operations that depend on each other.
+
+//search mai se search term aya first services se usaka use hamane  agale service ke code me kiya
+ init() {
+    this.claimEntryHelperService.searchCodes
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap((search: any) => search.searchTerm ? this.claimEntryService.searchCodes(search.searchTerm, search.medicalCode) : of([])))
+      .subscribe((codes: Array<Code>) => {
+      this.claimEntryHelperService.updateCodeSearchResults(codes);
+    });
+
+
+1)Merge Operator (merge):
+
+it emit one by one
+
+Combines multiple Observables into a single Observable that emits items from all of the input Observables.
+const observable1 = interval(1000);
+const observable2 = interval(500);
+
+merge(observable1, observable2).subscribe(result => console.log(result));
+
+
+anothet example :
+in ui i have create one searhc box what ever the value will there in search bot 
+we are getting this.searchcontrol.valueChanges
+
+this.searchcontrol.valueChanges.pipe(
+debounceTime(700),
+//ye value leke maine ek function callkiya 
+mergeMap(searchText:tring)=>this.filter(searchTxt))
+.subscribe(fruits:any)=>{
+this.fruits=fruits;
+}
+)
+
+
+
+filter(searchTXT:string){
+let observableONe=new Observable<string[]>((observer)=>{
+setTimeOut(()=>{
+observer.next(['apple','pineapple']));
+},5000);
+
+let observableTwo=new Observable<string[]>((observer)=>{
+setTimeOut(()=>{
+observer.next(['mango','orange']));
+},5000);
+
+});
+
+if(searchTxt=='app'){
+
+return observableONe;
+}else{
+return observableTwo;
+}
+
+jab maine search box me app wo one by on ecall hogaya a app ap all condtion ruled satifiled honge and call hoge
+
+it is not well experience to user in thi case we can use switch map
+imp--switch map cancels the prevous request - maine app kane wapas ap kiya to to app ka respnce hatayega aur latest respodikhega
+
+
+merge map process all request but switchmap process latest request and calcel previous request
+
+
+export class AppComponent{
+users:UserInterface[]=[
+{
+id:'1',name:'foo'}
+id:'2',name:'bar'}
+
+];
+
+constructor(){
+
+const foo$=this.getUser('1').pipe(
+//concatmap wait to call (getUser) method first after that (getUserDetails) this method  will call
+concatMap((user)=>this.getUserDetails(user))
+
+);
+foo$.subscribe((foo)=>console.log('foo',foo));
+}
+
+getUser(id:string):Observable<UserInterface>{
+const user=this.users.find(user)=>user.id===id)!;
+return of(user);
+}
+
+getUserDetails(user:UserInterface);Observable<UserDetailsInterface>{
+return of({id:user.id,age:30});
+
+}
+
+
+}
+
+
+
+
+
+
+
+### well explained mergemap and switchmap
+
+merge map - 
+
+import { of } from 'rxjs';
+import { mergeMap, map } from 'rxjs/operators';
+
+// Simulated HTTP request
+const fetchData = (id: number) => of(`Data for ID: ${id}`);
+
+// Stream of IDs
+const ids$ = of(1, 2, 3);
+
+// Using mergeMap
+ids$.pipe(
+  mergeMap(id => fetchData(id)) // fetchData(id) returns an observable
+).subscribe(data => console.log(data));
+
+
+Here, each ID triggers a fetch request, and mergeMap combines all results. The requests are handled concurrently, meaning they are not sequential.
+
+
+o/p -   Data for ID: 1
+	Data for ID: 2
+	Data for ID: 3
+
+import { of, timer } from 'rxjs';
+import { switchMap, map } from 'rxjs/operators';
+
+// Simulated HTTP request with delay
+const fetchData = (id: number) => timer(1000).pipe(map(() => `Data for ID: ${id}`));
+
+// Stream of IDs
+const ids$ = of(1, 2, 3);
+
+// Using switchMap
+ids$.pipe(
+  switchMap(id => fetchData(id)) // fetchData(id) returns an observable
+).subscribe(data => console.log(data));
+
+
+In this case, only the result for ID 3 is logged. When a new ID is emitted, the previous inner observable (for ID 1 and ID 2) is canceled, so you only get the result for the latest ID.
+
+o/p -
+
+Data for ID: 3
+
+
+
+
+
+
+
+
+
+
+
+

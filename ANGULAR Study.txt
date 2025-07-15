@@ -1,0 +1,315 @@
+how to create spring boot project
+why we use spring web dependency
+jpa
+custom query
+lazy loading and egger loading
+
+
+onchange- jab bhi input property ke data me change hoaga tab he onchange hook chalega mena s jo data hum child se parent me bhej rahe hai
+@input karane wo data agar change ho gaya to ye wala hook chalega esame hum updated values get kar sakate hai and value forms me updated value patch kar sakate hai
+
+classes that can add new behavior to the elements in the template or modify existing behavior.(element ka behavour change krayala ).
+
+
+Attribute Directive-
+
+1) ngClass: conditionalyy apply css class ( [ngClass]="{ 'invalid-input': getFormControl('ProfileName').invalid && (getFormControl('ProfileName').dirty || getFormControl('ProfileName').touched || isFormInvalid ) }">) css- .invalid-input{border:red}
+2) ngStyle: constional apply css style- [ngStyle]="{ 'margin-top': i > 2 ? '1%' : '' }">   [style.margin-bottom]="(isFormSubmitted || userData.get('password')?.touched) && userData.get('password')?.errors ? '30px' : '13px' "
+3) ngModel: 
+4) ngModel:
+5) ngSwitch:
+
+
+**custom attribute directive - own behavour of element (used @Decorator)
+
+elementREf- directly access html element of app.component 
+
+#app-componet.html
+
+<div appChangeMe> Hello world</div>
+
+
+
+#Changeme.directive.ts
+
+@Directive({
+selector:'[appChangeMe]'})
+
+export class ChangeMeDirective{
+
+constructor(
+private el:ElementRef
+){
+this.el.nativeElement.stylr.backgfroundcolor='red'
+}
+
+}
+ o/p- background color red
+
+maine app.component me hoi style nahi dali sirf directive me pass kiya 
+dynamic text bhi add kar sakate hai wo whole page ke liye use hoga - like this.el.nativeElement.innerTex=this.myName. (this.myName. is came dynamic) that we will use in whlole application using (appChangeMe) selector.
+
+
+
+
+
+* Decorators in angular-
+
+1)Class decorators, such as @Component and @NgModule :
+
+Angular provides us with some class decorators. They allow us to tell Angular a particular class is a component or a module
+
+2)Property decorators for properties inside classes, such as @Input and @Output
+
+3) Method decorators for methods inside classes, such as @HostListener
+
+4) Parameter decorators for parameters inside class constructors, such as @Inject
+
+
+Method decorator @HostListener -- Decorator that declares a DOM event to listen for, and provides a handler method to run when that event occurs.( jithe directive use kela ahe tithun jar click kela tarcha ha 
+event laganar tyachya lick varati element madhe vaklues made kahi karaycha asel te karanar- jar click kela tarach DOM event to listen karanar.
+
+ ClickHighlightDirective is a custom directive that listens for the 'click' event on the host element (the element where the directive is applied)
+
+click-highlight.directive.ts --
+
+import { Directive, HostListener, ElementRef } from '@angular/core';
+
+@Directive({
+  selector: '[appClickHighlight]'
+})
+export class ClickHighlightDirective {
+  constructor(private el: ElementRef) {}
+
+  @HostListener('click') onClick() {
+    this.highlight('yellow'); // You can set any color here
+  }
+
+  private highlight(color: string) {
+    this.el.nativeElement.style.backgroundColor = color;
+  }
+}
+
+(host element)-
+
+<!-- app.component.html -->
+<div appClickHighlight>
+  Click me to highlight!
+</div>
+
+
+***Parameter decorators for parameters inside class constructors, such as @Inject
+
+Assume you have a service that depends on another service, and you want to inject a specific instance of the dependency
+
+// dependency.service.ts
+
+import { Injectable } from '@angular/core';
+
+@Injectable()
+export class DependencyService {
+  getValue(): string {
+    return 'Hello from DependencyService!';
+  }
+}
+
+
+// dependent.service.ts
+
+import { Injectable, Inject } from '@angular/core';
+import { DependencyService } from './dependency.service';
+
+@Injectable()
+export class DependentService {
+  constructor(@Inject(DependencyService) private dependencyService: DependencyService) {}
+
+  getDependencyValue(): string {
+    return this.dependencyService.getValue();
+  }
+}
+
+
+// app.component.ts
+import { Component } from '@angular/core';
+import { DependentService } from './dependent.service';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <div>
+      <p>{{ dependentService.getDependencyValue() }}</p>
+    </div>
+  `,
+})
+export class AppComponent {
+  constructor(private dependentService: DependentService) {}
+}
+
+upper example we dont require (@Inject(DependencyService)) this line because : TypeScript handle automatically but when when injecting non-class dependencies using strings or custom tokens complesary to use @inject below is example
+
+imp- The use of @Inject is not always required when injecting classes because TypeScript's type inference often handles it automatically.
+ However, 
+when injecting non-class dependencies using strings or custom tokens, @Inject is necessary to explicitly specify the token for Angular's dependency injection system.
+
+I have set BaseUrl(dependency) in the AppConfigService(dependent) 
+
+import { Inject } from '@angular/core';
+
+@Injectable()
+export class AppConfigService {
+  constructor(@Inject('BASE_API_URL') private baseUrl: string) {}
+}
+
+this ( baseUrl: ) have not a classs define and 'BASE_API_URL' like this-  (/starturl/) this is my base url  and we can use store this url in this  (private baseUrl:string) in the  AppConfigService  we can use that url using this.baseUrl.
+
+
+
+** Optional Injector in angular (@Optional)
+
+export class MyComponent {
+  constructor(@Optional() private optionalService: OptionalService) {
+    // Use optionalService if available
+  }
+
+This way, the OptionalService is injected into MyComponent if it's available, but if it's not, the component still functions without errors.
+
+
+
+ngIf="claim.provider?.zip | timezoneZipToAbbreviation">({{ claim.provider?.zip | timezoneZipToAbbreviation}})</ng-container></span>
+
+
+@Pipe({name: 'timezoneZipToAbbreviation'})
+export class TimezoneZipToAbbreviationPipe implements PipeTransform {
+
+  constructor(private timezoneService: TimezoneService) {}
+//we required zip file for transform 
+  transform(zip: number | string): string {
+    if (zip) {
+      return this.timezoneService.getTimezoneAbbreviation(this.timezoneService.getTimezoneFromZip(zip));
+    }
+    return null;
+  }
+(Eastern Time Zone)  short honasr like this-  (EST)    
+claim.provider?.zip | timezoneZipToAbbreviation means - 
+if the ZIP code corresponds to a location in the Eastern Time Zone, the displayed abbreviation might be "EST."
+
+
+
+**Angular 17 Latest Features-
+new website release- 
+
+if i am added something or updated something angular doesn't know what elemet should i updated so track by hep to find those accurate element and only this element will be update and not rendet all element particular element will be render
+
+1) Angular.dev
+2) Control Flow Template--  <ul>
+    @for (customer of customers; track customer) {
+      <li>{{ customer.name }}</li>
+    }
+	@empty{
+ 	<li>this empty block only a call when in the for loop there are no any value using @empty</li>
+	}
+  </ul>
+
+Benefits of track by:
+
+Improved Performance: Angular can efficiently update the DOM based on changes in the list, reducing unnecessary re-renders.
+Correctness: Helps in correctly identifying which items have been added, removed, or moved in the list, even if the objects themselves are not new instances.
+
+* track unique id define karata hai and ye koine element ki value change ho gayi hai pura loop render nahi hota perticular index render hota hai
+
+<div @if="isLoggedIn">Hello</div> instead of ng if else bhi hai hamako abhi #mycontet ko ng tempate me add karane ki koi need nahi hai
+
+@if(loggedIn){
+the user is logegd in
+}else{
+the user is not logegd in
+
+
+}
+
+this reduce build size
+
+
+4)Automatic removal of css- when we removing and destroying component for that component css will also remove.
+
+
+6) Defer views ( पुढे ढकलले )- for performace perspectives- hame components ko manually lazy load karana padat tha
+
+refer this - https://angular.dev/guide/defer
+
+You can use @defer to lazy-load certain components or sections of the UI that are not immediately needed. This could help in reducing the initial load time of your component.
+
+@defer (on viewport)
+</commanList>
+}
+//place holder content to how until comments load
+@placeholder{
+<img src="hello.png">
+}
+
+you can use @placeholder,@error,@loading
+
+7) standalone component- whenever you create component it will create standalone component = true means this component is independent.
+ we don't need to use module structure.
+
+standalone: true makes the component standalone.
+imports: [CommonModule] imports the CommonModule to use directives like *ngIf.
+
+8) animation during navigation
+
+**signals in angular- state management-   link - https://chatgpt.com/share/94cbafcc-eae2-4cab-80d9-67c63bf56a89
+ 
+
+Selective Updates: Signals only trigger updates for parts of the UI that depend on the changed state.
+
+change detation se jab bhi kahi pe change hota hai usane baat ui update hota hai lekin wo bar bar change se bundal size increae hoti hai
+
+
+Only the parts of the UI that depend on viewBidHistoryView, viewBidHistoryCreate, or bidHistoryData are re-rendered when those signals change, rather than re-evaluating the entire component tree.
+
+
+  bidHistoryData = signal<ApiResponse>({ data: [] });
+  viewBidHistoryView = signal<boolean>(false);
+  viewBidHistoryCreate = signal<boolean>(false);
+
+
+getBidData() {
+  this.storeService.dispatchBidHistory(this.profileId);
+  this.storeService.getBidHistorydata()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((data: any) => {
+      if (data) {
+        this.bidHistoryData.set(data);
+      }
+    });
+
+
+When using Angular's reactive signals, the change detection mechanism is more fine-grained, and the template will automatically update based on the state changes of those signals. The main benefit is that only the parts of the DOM that depend on the changed signals will be re-rendered, which can lead to better performance and more predictable UI updates.
+
+
+
+very important -
+
+
+<div class="bid-history-container">
+  <div *ngIf="viewBidHistoryView">
+    <div *ngIf="bidHistoryData && bidHistoryData.data.length > 0; else noData">
+      <div *ngFor="let bidHistory of bidHistoryData.data; let i = index">
+        <mat-card>
+          <div>
+            <div>{{ bidHistory.isOriginalBid ? 'Original Bid' : 'Bid ' + (bidHistoryData.data.length - 1 - i) }}</div>
+            <div *ngIf="viewBidHistoryCreate && !bidHistory.isOriginalBid">
+              <mat-checkbox [(ngModel)]="bidHistory.isBidWon" (change)="onCheck($event, bidHistory.bidHistoryId)">Bid Won?</mat-checkbox>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+    <ng-template #noData>
+      <div>No data available</div>
+    </ng-template>
+  </div>
+</div>
+Change Detection Impact
+Full Change Detection Cycle: Whenever viewBidHistoryView or viewBidHistoryCreate changes, Angular's change detection cycle will check all bindings within the component. If viewBidHistoryView changes, it could trigger re-evaluation of bidHistoryData and potentially re-render all components that depend on it.
+
