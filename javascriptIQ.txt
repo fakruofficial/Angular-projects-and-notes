@@ -1,0 +1,581 @@
+1) SetTimeoutZero,- understand ke liye event loop,promise
+2) javascript ke file ko kaha rakhoge ()placement of js.
+3) kya jije blocking hoti hai kya chije non blocking hoti hai esaliye html ko alag , css ko alg , javascript ko alag
+4) let, const, var, different block scope.
+5) closures all with problems
+6) functional programming pollyfall map filter reduce
+7) this
+8) react angular vue js esame se aap kya chunoge ssg spa
+9) prototypical inheritance
+10) promises, async, await (that type of question) all problem very important
+11) Debounce vs Throttle.
+
+
+
+
+1) SetTimeoutZero,- understand ke liye event loop,promise
+
+setTimeout(function (){
+console.log(1);  //4
+},0)
+
+console.log(2); //1
+
+Promise.resolve().then(()=>{
+console.log(3); // 3
+});
+
+setTimeout(function(){
+console.log(4); //5
+},0)
+
+console.log(5); //2
+
+javascript is a single thread application means line by line code execute hota hai
+set timout order wise hi call hota hai
+
+but why promises print first time before settime out
+explanation-   microtask queue(promise callback,async function,) macroTask(setTimeout,setInterval,setImmediate) queue
+
+##eventloop ek ek ko call stack me bhejata hai 
+micro means chota and Macrotask micro ke baad atta hai
+esaliye wo promise pahile gaya
+
+imp note- event loop pahile micro task ko clear karega then wo macrotask ko lega.
+
+yese event loop work karata hai.
+
+##########################################################################
+
+3) kya jije blocking hoti hai kya chije non blocking hoti hai esaliye html ko alag , css ko alg , javascript ko alag.
+1) maintainability-This separation makes it easier to understand, maintain, and update each part of the codebase independently.
+2) code reusability-you can use the same CSS file across multiple HTML pages, or the same JavaScript functions across different parts of a website.
+
+ When you separate CSS into its own file, the browser downloads and stores that CSS file locally the first time a user visits your website.
+ Then, on subsequent visits to other pages within your site, the browser can reuse that same CSS file from its local cache instead of downloading it again.
+ This means faster loading times for subsequent pages, as the browser doesn't need to fetch the CSS code anew each time.
+
+JavaScript Separation: Similarly, when you keep JavaScript in a separate file, the browser downloads and caches that JavaScript file upon the first visit 
+to your site. Then, as the user navigates to different pages that use the same JavaScript code, the browser can reuse the cached JavaScript file rather 
+than fetching it repeatedly. This also contributes to faster loading times and a smoother user experience.
+
+
+###########################################################################
+
+4) let, const, var, different block scope.
+
+already coverd in previous study
+
+
+5) closures all with problems :
+
+
+Closures allow you to create private variables and functions within a scope.
+
+ 
+function init(){
+
+var name='gajendra';
+
+function displayName(){
+
+console.log(name);
+
+}
+return displayName;
+
+}
+
+let c=init();
+
+c()
+
+
+
+O/p - gajendra
+
+displayName() is the inner function its a closure
+
+
+
+function init(){
+
+var name='gajendra';
+
+function displayName(){
+
+console.log(name);
+
+}
+name="Harry";
+return displayName;
+
+}
+
+let c=init();
+
+c()
+
+
+
+O/p - Harry - closure name ke reference ko point out kareg naki hard coded value ko
+
+
+// another nested function functionality with example
+
+function returnFunc(){
+const x=()=>{
+let a=1
+console.log(a);
+
+const y=()=>{
+let a=2
+console.log(a);
+
+const z=()=>{
+let a=3
+console.log(a);
+}
+z()
+}
+y()
+}
+
+return x;
+
+}
+
+let a= returnFun()
+a()
+
+o-p 1,2,3
+
+
+
+function returnFunc(){
+const x=()=>{
+let a=1
+console.log(a);
+
+const y=()=>{
+//let a=2
+console.log(a);
+
+const z=()=>{
+//let a=3
+console.log(a);
+}
+z()
+}
+a=999;
+y()
+}
+
+return x;
+
+}
+
+let a= returnFun()
+a()
+
+o-p 1,999,999
+
+
+jab hum y ko call kar rahe the tab hamne a ko update kiya y ke andar muze a 999 milega 
+y ke pass apana a nahi hai wo apane parent ka a use karega agar usako parent me nahi milega to wo global env me check karega.ess tarah closures closure work karata hai
+
+
+closure ek function hota hai along with along with its lexical env means ek function ke saath usaka lexizal en bn dhoke milata hai
+
+
+
+function createCouter(){
+
+let count =0;  //private varable
+
+function increment(){
+count ++
+console.log(count);
+}
+
+function reset(){
+count =0;
+console.log(count);
+
+}
+
+return{
+
+increment
+reset
+
+}
+}
+
+const counter=createCounter()
+counter1.increment();//log 1
+counter1.increment(); //log 2
+counter1.reset(); // 0
+
+count ki value prvate ho gayi
+
+mai ek aur jagaha esako call karata hu counter 2 banake
+
+const counter2=createCounter(); 
+counter2.increment(); // 1 - nayi value ayegi pahale wali update nahi kara sakate kyunki wo private ho gaye hai
+
+dusare instance se ap usako change nahi kar sakate wo private ho gaye hai 
+
+aap esako banking ke liye use kar sakate ho
+
+#################################################
+
+
+6) functional programming pollyfall map filter reduce
+
+we can use varable as like a function 
+
+Higher-Order Functions-
+A powerful concept of functional programming is higher-order functions:
+
+If this function is receiving another function as a parameter (another term for this is “callback”), it is a higher-order function
+
+const names = ["Leonardo", "Lucas", "Bianca", "José", "Maria", "Joe"];
+
+const sayHiToNames = names.map(name => `Hello ${name}`);
+
+
+
+7) promises, async, await (that type of question) all problem very important (after this solve problem regarding this )
+
+
+const datas=[
+{name:"Ajay",Profession:"software Engineer"}
+{name:"Anuj",Profession:"software Engineer"}
+]
+
+function getDatas(){
+
+setTimeout(()=>{
+
+let output="";
+datas.forEach((data,index)=>{
+output += '<li>${data.name}</li>'
+})
+
+document.body.innerHtml=output
+
+),1000
+
+}
+
+function createData(newdata){
+setTimeout(()=>{
+datas.push(newdata);
+},2000)
+
+}
+
+createdata({name:"vivek",profession:"Software Engineer"})
+
+getData();
+ 
+
+
+O/P - ajay 
+      anuj
+
+but i am pushing the vivek also but because of time out its not showing
+
+solution
+
+const datas=[
+{name:"Ajay",Profession:"software Engineer"}
+{name:"Anuj",Profession:"software Engineer"}
+]
+
+function getDatas(){
+
+setTimeout(()=>{
+
+let output="";
+datas.forEach((data,index)=>{
+output += '<li>${data.name}</li>'
+})
+
+document.body.innerHtml=output
+
+),1000
+
+}
+
+function createData(newdata,callback){
+setTimeout(()=>{
+//jab push hoga usake baad ye callback call hoga
+datas.push(newdata);
+callback
+},2000)
+
+}
+
+createdata({name:"vivek",profession:"Software Engineer"},getData)
+
+o/p - ajay 
+      anuj
+      vivek	
+
+
+## promise-
+
+i have removed callback
+
+const datas=[
+{name:"Ajay",Profession:"software Engineer"}
+{name:"Anuj",Profession:"software Engineer"}
+]
+
+function getDatas(){
+
+setTimeout(()=>{
+
+let output="";
+datas.forEach((data,index)=>{
+output += '<li>${data.name}</li>'
+})
+
+document.body.innerHtml=output
+
+),1000
+
+}
+
+function createData(newdata){
+
+return promise((resolve,reject)=>{
+
+setTimeout(()=>{
+
+datas.push(newdata);
+let error =false;
+if(!error){
+here 
+resolve();
+}else{
+reject("kuch sahi nahi hai");
+}
+
+},2000)
+
+
+})
+
+}
+
+createdata({name:"vivek",profession:"Software Engineer"}).then(getDatas)
+
+
+o/p
+ajay
+anuj
+vivek
+
+
+create data se data push hone ke baad wo resolve ho jayega then (getDatas) chalega
+
+
+11) Debounce vs Throttle.
+
+##Debounce 
+
+function delayFuncExec() { 
+    console.log("I AM GFG "); 
+} 
+  
+setTimeout(delayFuncExec, 5000) 
+
+o-p- after 5 second function will call  "I AM GFG"
+
+
+## Throttling : 
+
+
+
+real time example of throttle
+
+
+we have login button it will take only first call after that it will not take any other call so the login api will not dispatch multiple times.
+
+
+
+11) difference between promises vs observable
+
+point 1 :
+
+promise-
+
+emit single value at a time that why its asncchronous
+
+const promise=new promise((resolve,reject){
+
+resolve(42);
+})
+
+promise.then(value=>{
+console.log(value);
+})
+
+
+observable -
+
+Emit multiple value at a time" means emitting multiple values together as a collection, array, or iterable. that why its sychronous
+
+const observable=new observable(()=>{
+observable.next(1);
+ setTimeout(() => {
+        observer.next(2); // Emitting another single value after a delay
+    }, 1000);
+})
+
+
+singleValueObservable.subscribe(value => {
+    console.log(value);
+    // Output:
+    // 1 (emitted immediately)
+    // 2 (emitted after 1 second delay)
+});
+
+
+const multipleValuesObservable = new Observable(observer => {
+    observer.next([1, 2, 3]); // Emitting multiple values as an array
+});
+
+multipleValuesObservable.subscribe(values => {
+    console.log(values); // Output: [1, 2, 3]
+});
+
+
+
+point 2 :promise
+ 
+not lazy its eager means execute immeduatly after creation
+
+observale :
+
+dont execute until we subscribe it 
+
+
+point 3:
+
+promise - not cancellable 
+
+observable - cancellable we can use unsubscribe the subscription
+
+point 4 :
+
+promise- not provide any operator 
+
+observable its provide rxjs operators , map ,filter,foreach
+
+#############################################################################################
+
+how to use promises in real time angular application
+
+
+  fetchData(): Promise<any> {
+    return this.http.get<any>('https://jsonplaceholder.typicode.com/todos/1').toPromise();
+  }
+
+fetchdata.then((resolve,reject)=>(data){
+
+if(data){
+console.log(data);
+}
+
+}
+
+
+observable real time use :
+
+  fetchData(): Observable<any> {
+    return this.http.get<any>('https://jsonplaceholder.typicode.com/todos/1');
+  }
+
+  
+
+
+// Curring in javascripts with technica suneja
+
+each taking one argument:
+
+function curriedAdd(a) {
+  return function(b) {
+    return a + b;
+  };
+}
+
+curriedAdd(1)(2);
+
+// function ke andar ek aur function means closure
+
+
+o/p - 3
+
+another project related example
+
+//this is my user object
+userObj={
+name:"ajay",
+age:28
+}
+
+//ek function wo object receive kar raha hai
+
+function userInfor(obj){
+
+return function(userinfo){
+
+// here we required key that is name or age we alreayd have object obj[name]= ajay
+return obj[userinfo];
+
+}
+
+}
+
+//first time we sent user object
+let res=userInfo(userObj);
+
+//next function we send only key name accordingly it will return his value ajay
+console.log(res('name));
+
+// first time o/p - ajay 28
+// nexttime  o/p- ajay 
+
+
+
+### W3 school 
+
+JavaScript Regular Expressions
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
