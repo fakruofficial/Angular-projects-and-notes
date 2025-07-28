@@ -1,0 +1,661 @@
+Interview's learning concepts - 
+
+
+## call , apply , bind
+
+
+1) call - function greet(name, age) {
+  console.log(`Hello, my name is ${name} and I am ${age} years old.`);
+}
+
+greet.call(null, 'John', 30); // Hello, my name is John and I am 30 years old.
+thisArg (null in this case) is the value of this inside the function. If null or undefined is passed, this defaults to the global object in non-strict mode, or stays undefined in strict mode.
+The other arguments are passed individually after thisArg.
+
+
+2) apply 
+
+
+The apply() method is similar to call(), but it takes the arguments as an array (or array-like object) instead of individual values.
+
+
+function greet(name, age) {
+  console.log(`Hello, my name is ${name} and I am ${age} years old.`);
+}
+
+greet.apply(null, ['John', 30]); // Hello, my name is John and I am 30 years old.
+
+Syntax: function.apply(thisArg, [arg1, arg2, ...])
+
+
+3) 
+
+
+Example: Using .bind() to Fix this
+javascript
+Copy
+const person = {
+  firstName: "Alice",
+  lastName: "Smith",
+  greet: function() {
+    console.log("Hello, " + this.firstName + " " + this.lastName);
+  }
+};
+
+const newPerson = {
+  firstName: "Bob",
+  lastName: "Johnson"
+};
+
+// Calling greet normally (this refers to person)
+person.greet();  // Output: Hello, Alice Smith
+
+// Now, let's use bind to create a new function that always uses `newPerson`
+// `greetNewPerson` is a new function where `this` is always bound to `newPerson`
+const greetNewPerson = person.greet.bind(newPerson);
+
+// Now, calling `greetNewPerson()` will use `newPerson` instead of `person`
+greetNewPerson();  // Output: Hello, Bob Johnson
+Explanation:
+Without .bind():
+person.greet() works normally because this inside greet() refers to person.
+With .bind(newPerson):
+greetNewPerson is a new function created using .bind(), which forces this to always refer to newPerson,
+
+
+##########################################################################
+ 
+
+what is the difference between navigate and navigateByUrl ?
+
+
+
+Absolute Path vs. Relative Path:
+
+## Absolute Path: Always starts from the root of the application and is independent of your current location in the app.
+
+Example: ['/home'], ['/about'], ['/products/123'].
+
+Absolute path: A full path starting from the root, independent of where you currently are in the application.
+
+
+
+Relative Path:
+
+Relative Path: Starts from the current route and changes the path based on where you are in the app.
+
+Example: ['details'] (relative to the current route).
+If you're on /product/123, this relative path would take you to /product/123/details.
+
+
+1. When to Use an Absolute Path:
+
+Navigate to a completely different route from anywhere in your app.
+
+
+
+
+***** scenario of relative route *****
+
+Scenario:
+Let's assume you have the following routes set up in your Angular app:
+
+typescript
+Copy
+const routes: Routes = [
+  { path: 'home', component: HomeComponent },
+  { path: 'product/:id', component: ProductComponent },
+  { path: 'product/:id/details', component: ProductDetailsComponent }
+];
+Now, you are currently on the /product/123 route (e.g., you're viewing a product with ID 123). From this route, you want to navigate to the /product/123/details route using a relative path.
+
+Example of Using Relative Path:
+typescript
+Copy
+import { Router, ActivatedRoute } from '@angular/router';
+
+constructor(private router: Router, private route: ActivatedRoute) {}
+
+navigateToDetails() {
+  // Using a relative path to navigate from the current route (/product/123) to /product/123/details
+  this.router.navigate(['details'], { relativeTo: this.route });
+}
+Explanation:
+['details'] is a relative path. It's a child route of the current route (/product/:id).
+{ relativeTo: this.route } tells Angular to resolve the path relative to the current route. In this case, since you're already on /product/123, Angular will navigate you to /product/123/details by appending the details path to the current route.
+
+
+In this case, ['details'] is relative to /product/123, so it becomes /product/123/details.
+
+
+2. When to Use a Relative Path:
+
+You are already in a route and want to navigate to a sub-route or child route of the current route.
+
+
+
+##########################################################################
+
+ Example Scenario with Both:
+You’re on the /product/123 route.
+
+You want to navigate to a details page within that route structure (/product/123/details).
+
+Use a relative path:
+typescript
+Copy
+this.router.navigate(['details'], { relativeTo: this.route });
+You want to navigate to the home page from anywhere in the app, regardless of the current route:
+
+Use an absolute path:
+typescript
+Copy
+this.router.navigate(['/home']);
+In summary, relative paths are crucial when navigating within a route hierarchy, helping you avoid redundancy and maintaining a flexible, clean routing structure, while absolute paths are needed for fixed navigation that is independent of your current route context.
+
+
+##########################################################################
+
+
+** navigate **  
+
+navigate() allows you to build this path dynamically and supports both absolute and relative navigation.
+
+
+const routes: Routes = [
+  { path: 'product/:id', component: ProductComponent },
+  { path: 'product/:id/details', component: ProductDetailsComponent }
+];
+
+navigateToProductDetails(productId: number) {
+  this.router.navigate(['/product', productId, 'details']);
+}
+
+
+navigate() allows you to build this path dynamically and supports both absolute and relative navigation.
+
+
+when to use 
+
+Use navigate():
+
+When you need to navigate dynamically using route parameters, query parameters,
+
+
+imp - Relative Paths	Supports relative navigation (relative to current route)
+
+
+####Using navigate() with Query Parameters: 
+
+
+Query parameters help in preserving the state of an application between page reloads or route changes. This is particularly helpful in scenarios like pagination, filters, or search results where the user's preferences need to be remembered.
+
+Example: If you’re on a search results page and apply a filter like "Price: Low to High," the filter setting can be stored in the query parameter so that if the user refreshes the page or shares the URL, the page reloads with the same filter applied.
+
+URL: /search?query=laptop&price=lowtohigh
+When the page is refreshed or shared, the query parameters preserve the filtering behavior.
+
+// productid we are sending as a query parameter
+
+  goToProductDetails(productId: number) {
+    // Use the navigate() method to go to the product details page
+    this.router.navigate(['/product', productId, 'details']);
+  }
+
+
+
+
+** navigateByUrl -  directly moving to a specific page
+
+Navigate by URL is a specific action where you move to a page by directly using a web address (URL).
+
+
+
+When you already have a full URL (or an UrlTree) that you want to navigate to directly.
+
+
+imp -  navigateByUrl()   Does not support relative paths
+
+
+
+#########################################################################
+
+
+## in angular why there is configuration file (tsConfig.json)
+
+A tsconfig.json file is a configuration file in TypeScript projects that defines how the TypeScript compiler (tsc) processes and compiles the TypeScript files in the project
+
+## angular.json file 
+
+The angular.json file is a configuration file used by Angular CLI to define and manage settings related to your Angular project. It controls various aspects of how the Angular application is built, served, tested, and deployed.
+
+
+Allows configuration of file replacements for different environments (e.g., replacing environment.ts with environment.prod.ts for production builds).
+
+Defines the "architect" for various tasks such as build, serve, test, lint, and e2e tests, allowing Angular CLI to know how to perform these tasks for the project.
+
+ {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.uat.ts"
+                }
+              ]
+
+
+IMP - The angular.json file is essential for configuring Angular projects, allowing the Angular CLI to manage how the app is built, served, tested, and deployed. It provides a centralized place for defining build configurations, file paths, assets, environment-specific settings, and more.
+
+
+##########################################################################
+
+ng build - 
+
+1) Configuration Loading:
+Angular CLI reads the build configuration from angular.json. By default, it uses the development configuration unless you specify otherwise (e.g., you can do specific build -  ng build --configuration production).
+
+2) Type Checking & Compilation:
+ all typescript converted into javascript
+
+
+4) Optimization (in production builds):
+When you use --prod, Angular performs additional steps:
+
+Minification: Removes unnecessary whitespace, comments, etc.
+Tree-shaking: Removes unused code (dead code elimination).
+Ahead-of-Time (AOT) Compilation: Compiles HTML and TypeScript during the build (instead of runtime) for faster apps.
+
+
+5) Output Generation:
+The compiled and optimized files are placed in the /dist folder. This folder contains all the static assets (HTML, CSS, JS) needed to deploy your app.
+
+
+6 ) Before Deployment:
+
+The /dist folder holds everything needed for deployment (HTML, JS, CSS, and assets).
+
+
+/dist
+ └── your-app-name/
+     ├── assets/
+     ├── favicon.ico
+     ├── index.html
+     ├── main.js
+     ├── polyfills.js
+     ├── runtime.js
+     ├── styles.css
+     └── vendor.js
+
+###** imp - You can deploy this folder to any web server (like Azure, AWS, or Netlify).
+
+When you deploy:
+
+You upload the contents of dist/your-app-name/ to a web server (like NGINX, Apache, or cloud platforms like Firebase or AWS S3).
+The index.html file becomes the entry point for your app.
+The JavaScript, CSS, and other assets are served as static files by the server.
+
+
+ 2. What happens after deployment?
+Once the app is deployed, here’s the flow:
+
+User requests your site (e.g., example.com).
+The web server serves the index.html file from the dist/ folder.
+The browser reads the index.html and starts fetching linked assets:
+JavaScript bundles (main.js, runtime.js, etc.)
+CSS files (styles.css)
+
+#### imp ###
+
+ 1. Minification (JavaScript compression)
+
+What it does: Reduces file size by removing whitespace, comments, and shortening variable names.
+Automatic?✔️ Yes, it works automatically when you run:
+bash
+Copy
+Edit
+ng build --prod
+
+
+2. Removes unused imports (Tree-shaking):
+If you have imports in your code that you never actually use, they will be removed from the final bundle.
+
+
+
+####### ng serve ##########
+
+ng serve — Development Mode
+Command	Purpose	Build Type	Where Code Lives
+ng serve	Runs a dev server, watches files	JIT (Just-in-Time)	Memory (not on disk)
+What happens:
+
+Starts a development server:
+Angular uses webpack dev server to serve your app at http://localhost:4200/.
+JIT compilation:
+
+TypeScript is compiled into JavaScript on the fly (Just-in-Time) in the browser.
+Templates (*.html) and decorators (@Component, etc.) are compiled during runtime.
+
+No dist/ folder:
+The compiled output (like main.js, polyfills.js, etc.) is not written to disk.
+Instead, webpack stores everything in memory — this speeds up incremental builds.
+
+Live reload (Hot Module Replacement):
+If you change a file, Angular recompiles only the parts that changed.
+The browser automatically refreshes or hot-reloads the updated components.
+Example:
+If you update app.component.ts, Angular only recompiles that part — not the entire app.
+
+
+##########################################################################
+
+5) can we call one of service without adding in the construtor 
+
+ 1. Using Injector (not recommended for regular use)
+You can manually get an instance of a service using Angular’s Injector.
+
+typescript
+Copy
+Edit
+import { Component, Injector } from '@angular/core';
+import { MyService } from './my.service';
+
+@Component({
+  selector: 'app-my-component',
+  templateUrl: './my-component.component.html',
+})
+export class MyComponent {
+  myService: MyService;
+
+  constructor(private injector: Injector) {
+    this.myService = this.injector.get(MyService);
+    this.myService.someMethod();
+  }
+}
+
+
+## angular 14 + 
+
+3. Using inject() function (Angular 14+)
+Angular introduced the inject() function for standalone components or functional services:
+
+typescript
+
+import { Component, inject } from '@angular/core';
+import { MyService } from './my.service';
+
+@Component({
+  selector: 'app-my-component',
+  templateUrl: './my-component.component.html',
+})
+export class MyComponent {
+  myService = inject(MyService);
+
+  ngOnInit() {
+    this.myService.someMethod();
+  }
+}
+
+
+** important point -  when inject()  would be benificial to use in application 
+
+✅ 1. Functional services (outside class constructors)
+If you’re using functions (not classes) — like custom RxJS operators, interceptors, or route guards — inject() helps pull in dependencies directly.
+
+Example: Using inject in a route guard:
+
+typescript
+
+import { CanActivateFn } from '@angular/router';
+import { AuthService } from './auth.service';
+
+export const authGuard: CanActivateFn = (route, state) => {
+  const authService = inject(AuthService);
+  return authService.isLoggedIn();
+}
+
+
+
+export class AuthService {
+  private isAuthenticated = false;
+
+  login() {
+    this.isAuthenticated = true;
+  }
+
+  logout() {
+    this.isAuthenticated = false;
+  }
+
+
+
+const routes: Routes = [
+  { path: '', component: LoginComponent },
+  { path: 'home', component: HomeComponent, canActivate: [authGuard] },
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
+})
+export class AppRoutingModule {}
+
+
+##########################################################################
+
+
+** shareReplay operator in angular ()  - from api if you hav same data each time then why it is reuire to call api every time if i used share replay the that data will be store in cache the we ca use that sam data in next subscribe .
+
+
+✅ What’s happening:
+Each time a new subscriber subscribes, the observable re-emits the value (in this case, 100).
+Unlike with shareReplay, nothing is cached — so every subscriber triggers the observable’s logic again.
+With a simple of(100), this isn't a big deal since it’s just emitting a number — but imagine this was an HTTP call — each subscriber would trigger a new request!
+✅ Real-world issue:
+Consider this with an HTTP request:
+
+typescript
+Copy
+Edit
+const source$ = this.http.get('https://api.example.com/data');
+
+source$.subscribe(data => console.log('Subscriber 1:', data));
+source$.subscribe(data => console.log('Subscriber 2:', data));
+Without shareReplay: 2 HTTP requests are made.
+With shareReplay(1): Only 1 HTTP request is made — and the result is cached for both subscribers.
+
+
+
+Example: Caching API data
+
+typescript
+Copy
+Edit
+private rfpSummary$ = this.http.get('https://api.example.com/rfpSummary').pipe(
+  shareReplay(1) // Cache the latest value for future subscribers
+);
+
+getRfpSummary() {
+  return this.rfpSummary$;
+}
+
+Why use it?
+Without shareReplay, every time a component subscribes, a new HTTP request would be fired. With it, the data is cached, and all subscribers get the same result instantly.
+
+
+
+##########################################################################
+
+10 ) if If i want to do automatic unsubscribe then what should i use ? 
+
+{{observable$ | async }}
+
+that observable will be automatically unsubscribe
+
+// what is the disadvantage of async pipe 
+
+When to use the async pipe:
+For simple, one-off observables (like fetching data or toggling a flag).
+When you want automatic subscription and cleanup (avoids memory leaks).
+
+Example: Multiple Subscriptions Problem
+
+<p>Value 1: {{ myObservable$ | async }}</p>
+<p>Value 2: {{ myObservable$ | async }}</p>
+
+
+✅ How to fix it:
+Store the result using ngIf:
+
+<ng-container *ngIf="myObservable$ | async as value">
+  <p>Value 1: {{ value }}</p>
+  <p>Value 2: {{ value }}</p>
+</ng-container>
+Now there’s only one subscription since the value is cached in the value variable.
+Use shareReplay() for shared streams:
+typescript
+Copy
+Edit
+myObservable$ = this.service.getData().pipe(shareReplay(1));
+This makes sure multiple uses of async pull from the same shared subscription.
+Push the logic into your component:
+typescript
+
+
+value$ = this.myObservable$.pipe(shareReplay(1));
+And in the template:
+
+html
+
+<p *ngIf="value$ | async as value">
+  Value 1: {{ value }}
+  Value 2: {{ value }}
+</p>
+
+
+
+11) is async is pure pipe or impure pipes 
+
+
+An impure pipe may depend on external factors means if the pipe value is changing multiple times that time that pipe will be impure pipe 
+
+e.g async, timer ,
+
+TimerPipe returns the current time every time it is evaluated. Since the time is constantly changing, this pipe will re-evaluate frequently, even if the input value (value) hasn’t changed.
+
+*************
+
+pure pipe means pipe has 
+
+UppercasePipe is a pure pipe because it always returns the uppercase version
+
+
+A pure pipe only changes the output if the input data changes. It doesn't depend on external states like asynchronous data or global variables.
+
+##########################################################################
+
+
+
+12 ) have you used fork join ? when we ca use fork join
+
+
+fork join is an operator in rxjs used to combine multiple observable an dwait for all of them to complete before emitting a single valu which contanes latest values from all of the observable .
+ it is usefl when you want to perform multiple async operation in parallel an dthen combine their result once all have finished.
+
+
+when this will be beneficial - 
+
+this is useful for scenario where you need to wait for all async operations to finish before proceeding.
+
+
+
+example - 
+
+
+const observable1 = of('FIrst);
+
+const observable2 = of('second);
+
+forkJoin([observable1,observable2]).subscribe(result=> {
+
+console.log(result);
+} );
+
+
+
+###################################################################################################################################################################################
+
+
+***** https://voidchetan.github.io/interview_question_app_angular_17/home *****
+
+
+### About Tree Shakking ###
+
+
+The Tree Shaking process basically reduces the download size of an application over network.
+
+Tree Shaking is a way to remove unused modules from the final bundle file of the application.
+
+Angluar CLI by default uses WebPack bundler for bundling the script files which supports
+
+
+
+Benefits:
+
+Reduced Bundle Size
+
+Improved Performance
+
+Cleaner Code
+
+✅ Step 6: Check Angular Config
+Ensure your angular.json file has optimization enabled:
+
+json
+Copy
+Edit
+{
+  "configurations": {
+    "production": {
+      "optimization": true,
+      "sourceMap": false,
+      "namedChunks": false,
+      "extractLicenses": true
+    }
+  }
+}
+
+
+
+✅ When You Should Decrease the Chunk Size
+Chunk Size > 2 MB:
+
+If a chunk (like your help-script-help-script-module at 2.06 MB) is above 2 MB, it might lead to slower loading times, especially on mobile or slower networks.
+
+Initial Load Time:
+
+If users experience delays when opening your app, reducing the initial chunk size will improve loading speed.
+
+Core Bundle > 1 MB:
+
+If the bootstrap file (7.01 MB) is significantly large, it indicates too much code in the main bundle.
+
+Users with Low Bandwidth:
+
+For users in areas with low-speed internet, reducing bundle size can dramatically improve accessibility.
+
+################################################
+
+
+1. what is mean by Hot and Cold observable in Angular.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
